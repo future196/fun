@@ -1,0 +1,294 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=on">
+		<link href="static/css/m-reset_1.css" rel="stylesheet">
+		<link href="static/css/global1803.css" rel="stylesheet">
+		<link href="static/css/topic-style.css" rel="stylesheet">
+		<script src="static/js/Vue2.0.js"></script>
+		<script src="static/js/jquery.min.js"></script>
+		<script src="static/js/jquery.cookie.js"></script>
+		<script src="static/js/currency_utils.js"></script>
+		<script src="static/js/global20170703.js"></script>
+		
+	</head>
+	<body class="bg w">
+		<div id="vue">
+			<title v-if='parm=="key"'>搜索结果</title>
+			<title>{{type}}</title>
+			<title v-else>{{type}}</title>
+			<div class="top-height h9">
+				<div class="top-fixed">
+					<!--头部导航-->
+					<header class="top">
+						<div class="main">
+
+							<div class="left"><a onclick="javascript:history.go(-1)" class="txt"><b class="iconfont icon-back1"></b></a></div>
+							<!-- <div class="right"><a class="menu-link"><b class="iconfont icon-menu"></b></a></div> -->
+							<!-- <p class="ti">票务查询</p> -->
+							<p class="ti" v-if='parm=="key"'>搜索结果</p>
+							<p class="ti" >{{type}}</p>
+							<p class="ti" v-else>{{type}}</p>
+
+						</div>
+					</header>
+					<div class="channel-search">
+						<div class="main">
+							<div class="search">
+								<div class="s-input"><input type="text" placeholder="输入景区名/城市/主题关键字" :value='parm=="key"?key:""' id="key" name="key"></div>
+								<a>
+									<div class="s-btn"><b class="iconfont icon-search" v-on:click='searchProduce'></b></div>
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--频道搜索EDN-->
+
+			<!--推荐/热销产品-->
+			<div class="hot-list single">
+				<div class="classify-top classify-item">
+					<span class="ti yellow" v-if='parm=="key"'>搜索结果</span>
+					<span class="ti yellow" v-if='parm=="more"'>{{type}}</span>
+					<span class="ti yellow" v-else>{{type}}</span>
+				</div>
+				<ul>
+					
+					<div style="text-align: center;margin: 10vw 0;font-size: 1.5rem;" v-if='produceList.length == 0'>
+						空空如也
+					</div>
+					
+					<li v-for='(item,index) in produceList'>
+						<a :href="'goods.html?id='+item.pi_id">
+							<div class="img img-clip"><img style="height: 40vw;max-height: 32rem;" :src="item.pi_picture"></div>
+							<!-- <span class="city"><b class="iconfont icon-city"></b>清新区</span> -->
+							<div class="cont">
+								<p class="ti">{{item.pi_name}}
+								</p>
+								<div class="bt"><span class="price">¥<b>{{item.pi_price}}</b>起</span><span class="btn">立即查看</span></div>
+							</div>
+						</a>
+					</li>
+
+
+				</ul>
+			</div>
+
+
+				<div style="text-align: center;margin:30px;">
+					<button type="button" style="text-align: center;" v-if='more_status==0' v-on:click='getMore'>加载更多</button>
+					<button type="button" style="text-align: center;" v-if='more_status==1'>加载中...</button>
+					<button type="button" style="text-align: center;" v-if='more_status==2'>没有更多了</button>
+				</div>
+				
+			<div class="mask-div"></div>
+		</div>
+
+		<script language="javascript">
+			$(function() {
+				imgClip(".hot-list .img", 2);
+				imgClip(".hot-list.single .img", 2);
+				//img-clip
+				function imgClip(e, s) {
+					var w = $(e).width();
+					var h = parseInt(w / s);
+					$(e).each(function() {
+						$(this).css("height", h);
+						var ih = $(this).find("img").height();
+						if (ih < h) {
+							$(this).find("img").css("height", "100%")
+						}
+					});
+				};
+			});
+
+
+
+			
+			// }
+		</script>
+		<script type="text/javascript">
+			var agent = '';
+			if(document.domain == 'www.test.com'){
+				var agent = '/api';  // 用于跨域代理名称转化
+				console.log('测试环境')
+			}else{
+				console.log('线上环境')
+			}
+			new Vue({
+				el: '#vue',
+				data: {
+					produceList: [],
+					more_status: 0, // 0静默状态, 1加载中, 2没有更多了
+					key: '',
+					parm: '',
+					start: 0,
+					limit: 10,
+					length: 10,
+					type: '周边短线'
+				},
+				methods: {
+					// 搜索产品
+					searchProduce: function(){
+						var key = $('#key').val();
+						this.start = 0;
+						this.limit = this.length;
+						if(key == ''){
+							alert('请输入关键字');
+							return false;
+						}
+						this.getProduceListByName(key, this.start, this.limit);
+					},
+					
+					// 通过产品类别获取列表
+					getProduceListById: function(id, start, limit){
+						let that = this;
+						that.key = id;
+						that.parm = 'id';
+						that.start = start;
+						that.limit = limit;
+						$.post(agent+"/lsmsManager/product/queryProductInfoByPiClassification",
+							{ 
+								pi_classification: id,
+								start: start,
+								limit: limit,
+							},
+							function(data,status){
+								if(data.length < that.limit){
+									that.more_status = 2;
+									this.start = 0;
+									this.limit = this.length;
+								}else{
+									that.more_status = 0;
+								}
+								that.produceList = data.map(function(value, index){
+									value.pi_picture = agent+'/imgaes/'+value.pi_picture.substring(0, value.pi_picture.length-1);
+									return value;
+								});
+							  
+						});
+					},
+					
+					// 通过产品名称搜索产品列表
+					getProduceListByName: function(key, start, limit){
+						let that = this;
+						that.key = key;
+						that.parm = 'key';
+						that.start = start;
+						that.limit = limit;
+						$.post(agent+"/lsmsManager/product/queryProductInfoByPiNameLike",
+							{ 
+								pi_name: key,
+								start: start,
+								limit: limit,
+							},
+							function(data,status){
+								if(data.length < that.limit){
+									that.more_status = 2;
+									this.start = 0;
+									this.limit = this.length;
+								}else{
+									that.more_status = 0;
+								}
+								that.produceList = data.map(function(value, index){
+									value.pi_picture = agent+'/imgaes/'+value.pi_picture.substring(0, value.pi_picture.length-1);
+									return value;
+								});;
+							  
+						});
+					},
+					
+					// 查看更多推荐
+					getProduceListMore: function(key, start, limit){
+						let that = this;
+						that.key = key;
+						that.parm = 'more';
+						that.start = start;
+						that.limit = limit;
+						$.post(agent+"/lsmsManager/product/queryProductInfoByPiPushStatus",
+							{ 
+								pi_push_status: key,
+								start: start,
+								limit: limit,
+							},
+							function(data,status){
+								if(data.length < that.limit){
+									that.more_status = 2;
+									this.start = 0;
+									this.limit = this.length;
+								}else{
+									that.more_status = 0;
+								}
+								that.produceList = data.map(function(value, index){
+									value.pi_picture = agent+'/imgaes/'+value.pi_picture.substring(0, value.pi_picture.length-1);
+									return value;
+								});;
+							  
+						});
+					},
+					
+					// 加载更多
+					getMore: function(){
+						let that = this;
+						console.log('加载更多')
+						that.more_status = 1;
+						setTimeout(function(){
+							if(that.parm == 'key'){
+								that.getProduceListByName(that.key, that.start, that.limit+that.length)
+							} else if(that.parm == 'more'){
+								that.getProduceListMore(that.key, that.start, that.limit+that.length)
+							}
+							else{
+								that.getProduceListById(that.key, that.start, that.limit+that.length)
+							}
+						},600);
+						
+					}
+					
+				},
+				created: function(){
+					let that = this;
+					var href = decodeURI(location.href);
+					var name = href.split('?');
+					var parms = name[1].split('&');
+					var parm = parms[0].split('=')[0];
+					var key = parms[0].split('=')[1];
+					if(parms.length>1){
+						that.type = parms[1].split('=')[1];
+					}
+					// var parm = name[1].split('=')[0];
+					// var key = name[1].split('=')[1];
+					if(parm == 'key'){
+						// 模糊搜索产品
+						this.getProduceListByName(key,this.start, this.limit);
+					} else if(parm == 'more'){
+						// 查询更多
+						this.getProduceListMore(key, this.start, this.limit);
+					} else{
+						// 查询分类类型
+						this.getProduceListById(key, this.start, this.limit);
+					}
+					
+					$(document).scroll(function(e) {
+						if(that.more_status != 0) return false;
+						var height = $(document).height();	// 内容总高度
+						var heightTo = $(this).scrollTop();		// 已滚动高度
+						var screenHeight = document.documentElement.clientHeight;	// 屏幕高度
+						if(heightTo+screenHeight+100 >= height){
+							that.getMore();
+						}
+					})
+					
+				}
+			})
+			
+			
+		</script>
+	</body>
+
+</html>

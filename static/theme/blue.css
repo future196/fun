@@ -1,0 +1,215 @@
+/*
+***
+****
+theme-blue */
+.card-wrap {
+	background:#0d44b4;
+}
+.card-wrap .cw-top .ti {
+	color:rgba(255,255,255,0.9);
+}
+.card-wrap .cw-top .link {
+	color:rgba(255,255,255,0.4);
+}
+.top{
+	background-color:#fafafa;
+	color:#333;
+}
+.bottom{
+	background-color:#e9e9e9;
+	color:#aaa;
+}
+.top a {
+	color:#0d44b4;
+}
+/*background-color*/
+.btn-search a,.search .s-btn b,.product-list2 .textbox .btn,.table-list li .btn a.order,.sb-item .number a {
+	background-color:#0d44b4;
+}
+.top-index {
+	background-color:#fff;
+}
+/*color*/
+.btn-search a,.search .s-btn b,.product-list2 .textbox .btn,.sb-item .number a {
+	color:#fff;
+}
+.top-index .nav li,.product-info .tips .map,.hot-list .classify,.block,.screen-bar .more-btn,.screen-bar li a,.screen-bar .date-list .d-prev,.screen-bar .date-list .d-next,.block .head b.f-icons {
+	color:#0d44b4;
+}
+/*border*/
+.top-index {
+	border-bottom:3px solid #0d44b4;
+}
+.search {
+	border:2px solid #0d44b4;
+}
+.s-link a {
+	border:1px solid #aaa;
+	color:#666;
+	background-color:#fff;
+}
+.hot-list .classify span {
+	border-color:#0d44b4;
+}
+/*热销*/
+.hot-list .bt,.hot-list li .btn {
+	color:#0d44b4 !important;
+}
+.hot-list.single li .btn {
+	border:1px solid #0e378c;
+	background-color:#0d44b4;
+}
+.hot-list.single .btn-more {
+	color:#0d44b4;
+}
+/*screen-bar*/
+.screen-bar {
+	background-color:#cce0f8;
+	border-top:1px solid #b2d0f4;
+	border-bottom:1px solid #b2d0f4;
+}
+.screen-bar ul {
+	border-left:1px solid #b2d0f4;
+}
+.screen-bar li {
+	border-right:1px solid #b2d0f4;
+}
+.screen-bar .sb-search {
+	background-color:#3e5a90;
+}
+.screen-bar .sb-search input {
+	color:#aecaff;
+}
+.screen-bar .sb-search b.f-icons {
+	color:#aecaff;
+}
+.screen-bar .sb-search input::-moz-placeholder {
+	color:#7b94c3;
+}
+.screen-bar .sb-search input:-ms-input-placeholder {
+	color:#7b94c3;
+}
+.screen-bar .sb-search input::-webkit-input-placeholder {
+	color:#7b94c3;
+}
+/*ohter*/
+.sort .sel-box .ti span {
+	color:#7799db;
+	border-left:2px #7799db solid;
+}
+.link-box a,.screenside .ss-city-item .link a.on {
+	border:1px solid #c2cee9;
+	color:#3e5a90;
+}
+.link-box a.on {
+	border:1px solid #dee5f4;
+	background-color:#dee5f4;
+}
+.sort .btn a.comfir,.screenside .btn a.comfir {
+	background-color:#7799db;
+}
+.screenside .ss-ti,.screenside .ss-price {
+	background-color:#cce0f8;
+	border-bottom:1px solid #7693cb;
+}
+.screenside .ss-ti .right {
+	color:#3e5a90;
+}
+.city-list .cl-nav {
+	background-color:#cce0f8;
+	border-top:1px solid #b2d0f4;
+}
+.city-list .cl-nav li {
+	border-bottom:3px solid #cce0f8;
+	color:#66a1ea;
+}
+.city-list .cl-nav li.current {
+	color:#0063dc;
+	border-bottom:3px solid #0063dc;
+}
+.city-list .item-city a.on {
+	color:#0d44b4;
+}
+.city-list .hotcity-span li a.on {
+	color:#0d44b4;
+}
+
+/*活动专题*/
+.topic-top .topic-menu .back-icon:before {
+	color:#3e5a90;
+	display:inline-block;
+	font-family:icons;
+	content:'\0052';
+	font-size:20px;
+	margin-top:10px;
+}
+.topic-search-bar {
+	background:#3e5a90;
+}
+.topic-screen-bar .recommend.sel .icon-after,.topic-screen-bar .price.sdown .icon-after,.topic-screen-bar .discount.sdown .icon-after,.topic-screen-bar .time.sdown .icon-after,.topic-screen-bar .price.sup .icon-after,.topic-screen-bar .discount.sup .icon-after,.topic-screen-bar .time.sup .icon-after {
+	color:#000;
+}
+.topic-tab-black li.sel a {
+	background:#3e5a90 !important;
+}
+.topic-tab-simple li.sel a {
+	color:#3e5a90;
+	border-top:2px solid #3e5a90;
+}
+.topic-tab2-simple span.on {
+	border:1px solid #3e5a90;
+	color:#3e5a90;
+}
+/*2016-07-06租车*/
+.carRental-wrap .order-wrap .cw-tab-ctrl {
+	border:1px solid #3e5a90;
+}
+.carRental-wrap .order-wrap .cw-tab-ctrl li {
+	color:#3e5a90;
+	border-left:1px solid #3e5a90;
+}
+.carRental-wrap .order-wrap .cw-tab-ctrl li.sel {
+	color:#fff;
+	background-color:#3e5a90;
+}
+.common-count a {
+	color:#fff;
+	background-color:#3e5a90;
+}
+.carRental-wrap .cw-pop-cont .ycsl-cont .btn {
+	color:#fff;
+	background-color:#3e5a90;
+}
+.carRental-wrap .cw-pop-cont .clyq-cont .btn1 {
+	background-color:#3e5a90;
+	color:#fff;
+	border:1px solid #3e5a90;
+}
+.carRental-wrap .cw-pop-cont .clyq-cont .btn2 {
+	background-color:#fff;
+	color:#3e5a90;
+	border:1px solid #3e5a90;
+}
+/*2017-03-01游船*/
+.pleasureBoat-wrap .order-info .pb-part1 .a-list a.sel {
+	color:#3e5a90;
+	border:1px solid #3e5a90;
+}
+.pleasureBoat-wrap .order-info .pb-part2 .time-list li.sel .time1,.pleasureBoat-wrap .order-info .pb-part2 .time-list li.sel .time2 {
+	color:#3e5a90;
+}
+.pleasureBoat-wrap .order-info-bottom .sel-tips .btn {
+	background-color:#3e5a90;
+	color:#fff;
+}
+.slide-tab .st-ctrl li.sel a {
+	background-color:#3e5a90;
+	color:#fff;
+}
+.pleasureBoat-wrap .st-cont-item li .r p.sel {
+	border:1px solid #3e5a90;
+	color:#3e5a90;
+}
+.pleasureBoat-wrap .order-date a span {
+	color:#3e5a90;
+}

@@ -1,0 +1,128 @@
+.xw-header{
+	width:100vw;
+	height:100px;
+	background: white;
+	/* display: flex; */
+	/* background: #ee9900; */
+	/* border-bottom-right-radius: 3vw;
+	border-bottom-left-radius: 3vw; */
+	max-width: 640px;
+}
+
+.xw-header .icon{
+	/* flex: 1; */
+	text-align: center;
+}
+
+.xw-header .icon img{
+	height:50px;
+	width:50px;
+	margin-top:15px;
+/* 	margin-left:50%; */
+	border-radius: 50px;
+}
+
+.xw-header .nickname{
+	margin-top: 10px;
+	text-align: center;
+	/* flex: 1.5; */
+	/* line-height: 100px; */
+	font-size: 1.6rem;
+	/* color:white; */
+}
+
+.order_manager{
+	font-size: 1.3rem !important;
+	text-align: left !important;
+	display: block !important;
+	padding:0 !important;
+	padding-left: 2vw !important;
+	margin-top:1vw;
+}
+
+.xw-block{
+	margin-bottom: 15px;
+}
+
+.xw-block .xw-order-header{
+	height:30px;
+	width:100vw;
+	background: white;
+	line-height: 30px;
+	padding: 0 2vw;
+	border-bottom: 1px solid #F4F4F4;
+	color:grey;
+	max-width: 640px;
+}
+
+.xw-block .xw-order-header span{
+	float: right;
+	margin-right:5vw;
+	color:#ee9900;
+}
+
+.xw-block .xw-order-content{
+	background: white;
+	padding:10px 5vw;
+}
+
+.xw-block .xw-order-content div{
+	line-height: 10px;
+}
+
+.xw-block .xw-order-content .xw-order-title{
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	line-height: 20px;
+	font-weight: bold;
+}
+
+.xw-block .xw-order-content .xw-order-set-meal{
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	line-height: 20px;
+	color:grey;
+}
+
+.xw-block .xw-order-content .xw-order-price{
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	line-height: 20px;
+	color:grey;
+}
+
+.xw-block .xw-order-bottom{
+	height:30px;
+	width:100vw;
+	background: white;
+	line-height: 30px;
+	padding: 0 2vw;
+	border-top: 1px solid #F4F4F4;
+	color:grey;
+	max-width: 640px;
+}
+
+.xw-block .xw-order-bottom span{
+	float: right;
+	margin-right:5vw;
+	color:#ee9900;
+	padding: 0 10px;
+	background: #ee9900;
+	color:white;
+	border-radius: 30px;
+	line-height:25px;
+	margin-top:2.5px;
+}
+
+
+/* 购物车 */
+.header_title{
+	text-align: center;
+	background: white;
+	line-height: 35px;
+	font-size: 1.4rem;
+	font-weight: blod;
+}

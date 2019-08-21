@@ -1,0 +1,218 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>趣稚旅游
+		</title>
+		<meta name="MobileOptimized" content="width">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=no">
+		<link href="static/css/m-reset.css" rel="stylesheet">
+		<link href="static/css/global1803.css" rel="stylesheet">
+		<link href="static/css/global2019.css" rel="stylesheet">
+		<script src="static/js/Vue2.0.js"></script>
+		<script src="static/js/jquery.min.js"></script>
+		<script src="static/js/jquery.cookie.js"></script>
+		<script src="static/js/global.js"></script>
+	</head>
+	
+
+	<body class="bg w">
+		<!-- <button type="button" onclick="location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxb91238e9f2c2f688&redirect_uri=http://qz.gzbigbang.net/file/index.html&response_type=code&scope=snsapi_userinfo#wechat_redirect'">授权</button> -->
+		<div id='vue'>
+			<div class="wrapper">
+
+				<div id="content">
+					
+					<div class="moveBody">
+						<!--搜索-->
+						<div class="model-search">
+							<div class="ms-searchbar">
+								<div class="main">
+									<div class="bg">
+										<p class="textbox"><input type="text" name="key" id="key" placeholder="搜索目的地/景点/酒店"></p>
+										<a v-on:click='searchProduce' class="btn"><b class="iconfont icon-search"></b></a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<section>
+							<div class="siema boxTxt">
+								<div class="box" :class="index+1" v-for='(item,index) in banner'>
+									<a :href="'goods.html?id='+item.product_id"><img :src="item.picture" ></a>
+								</div>
+							</div>
+						</section>
+						<div class="banner-spot">
+							<span :class="{on: index == banner_index}" v-for='(item,index) in banner'></span>
+						</div>
+					</div>
+
+					<!--菜单栏-->
+
+					<div class="column">
+						<ul class="menu new">
+
+							<li v-for='(item,index) in classification'>
+								<a class="photo" :href="'category.html?id='+item.id+'&type='+item.classification_info">
+									<p class="img"><img :src="item.classification_picture"></p>
+									<p class="ti">{{item.classification_info}}
+									</p>
+								</a></li>
+
+
+
+							<!-- <li>
+								<a class="photo" href="category.html">
+									<p class="img"><img src="static/images/type2.png"></p>
+									<p class="ti">精品路线
+									</p>
+								</a></li>
+			
+							<li>
+								<a class="photo" href="category.html">
+									<p class="img"><img src="static/images/type3.png"></p>
+									<p class="ti">亲子游
+									</p>
+								</a></li>
+			
+							<li>
+								<a class="photo" href="category.html">
+									<p class="img"><img src="static/images/type4.png"></p>
+									<p class="ti">定制游
+									</p>
+								</a></li> -->
+
+
+						</ul>
+					</div>
+
+					<!--菜单栏END-->
+
+					<!--推荐/超值热销产品-->
+
+					<div class="classify-top classify-czrx">
+						<span class="recommend_title">推荐</span>
+						<div class="more"><a href="category.html?more=1&type=推荐">更多</a></div>
+					</div>
+					<div class="column">
+						<ul class="hot-list slide">
+
+							<li v-for='(item,index) in hotScenery'>
+								<a :href="'goods.html?id='+item.pi_id">
+									<div class="img img-clip"><img style="height: 20vw;max-height: 18rem;" :src="item.pi_picture"></div>
+
+									<!-- <span class="city"><b class="iconfont icon-city"></b>清新区</span> -->
+
+									<div class="cont">
+										<p class="ti">{{item.pi_name}}
+										</p>
+										<div class="bt"><span class="price">¥<b>{{item.pi_price}}</b>起</span></div>
+									</div>
+								</a>
+							</li>
+
+						</ul>
+					</div>
+
+				</div>
+			</div>
+
+			<!--推荐/热销产品END-->
+
+			<!--限时抢购-->
+
+			<!--限时抢购END-->
+
+			<!--热门周边景点-->
+
+			<div class="classify-top classify-item"><span class="ti blue">热门周边景点</span>
+				<div class="more"><a href="category.html?more=2&type=热门周边景点">更多</a></div>
+			</div>
+			<div class="column">
+				<ul class="hot-list single ">
+
+					<li v-for='(item,index) in nearbyScenery'>
+						<a :href="'goods.html?id='+item.pi_id">
+							<div class="img img-clip"><img style="height: 40vw;max-height: 32rem;" :src="item.pi_picture"> </div>
+							 <!-- <span class="city"><b class="iconfont icon-city"></b>清新区</span> -->
+							<div class="cont">
+								<p class="ti">{{item.pi_name}}
+								</p>
+								<div class="bt"><span class="price">¥<b>{{item.pi_price}}</b>起</span><span class="btn">立即查看</span></div>
+							</div>
+						</a>
+					</li>
+					
+
+				</ul>
+			</div>
+
+			<!--热门周边景点END-->
+
+
+
+			<!--热门线路-->
+
+			<!--热门线路END-->
+
+
+
+			<a class="topbar goTop" href="#"><img src="static/picture/top.png"></a>
+			<div class="menu-bar">
+				<div class="mb-fixed">
+					<div class="mb-cont">
+						<ul class="mb-list">
+							<li class="sel item"><a class="center" href="index.html"><span class="icon-home iconfont"></span>
+									<p class="ti">首页</p>
+								</a></li>
+
+							<li class="item more-ctrl">
+								<div class="center"><span class="icon-classify iconfont"></span>
+									<p class="ti">分类</p>
+								</div>
+							</li>
+
+							<!-- <li class="item" onclick="location.href='car.html'">
+								<div class="center"><img style="height:30px;width:30px;" src="static/images/car.png">
+									<p class="ti">购物车</p>
+								</div>
+							</li> -->
+
+							<li class="item"><a class="center" href="user.html"><span class="icon-my iconfont"></span>
+									<p class="ti">个人中心</p>
+								</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="menu-bar-more">
+				<div class="menu-bar-mask"></div>
+				<div class="mm-cont">
+					<div class="mm-list">
+						<!--菜单栏-->
+
+
+						<a class="item" :href="'category.html?id='+item.id" v-for='(item,index) in classification'>
+							<img :src="item.classification_picture" style="width:80%;">
+							<p class="ti">{{item.classification_info}}
+							</p>
+						</a>
+
+
+
+
+						<div class="iconfont icon-arrow more-hide"></div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<script type="text/javascript" src="static/js/index.js"></script>
+
+
+	</body>
+</html>

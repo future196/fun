@@ -1,0 +1,374 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=on">
+		<link href="static/css/m-reset.css" rel="stylesheet">
+		<link href="static/css/global20170313.css" rel="stylesheet">
+		<link href="static/css/topic-style.css" rel="stylesheet">
+		<link href="static/css/global2019.css" rel="stylesheet">
+		<script src="static/js/Vue2.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="static/js/jquery.min.js"></script>
+		<script src="static/js/jquery.cookie.js"></script>
+		<!-- <script src="static/js/currency_utils.js"></script> -->
+		<!-- <script src="static/js/global20170703.js"></script> -->
+		<title>下单--填写客人资料</title>
+	</head>
+	<body class="bg">
+		<div id="vue">
+			
+			
+			<!-- 自己编写的alert弹框 -->
+			<div class="alertSelf" v-if='alert'>
+				<div class="windowSelf">
+					<div class="contentSelf">
+						{{alertContent}}
+					</div>
+					<div class="buttonSelf">
+						<div id="alertConfirm" v-on:click="alert=false">好的</div>
+					</div>
+				</div>
+			</div>
+			
+			<header class="top">
+				<div class="main">
+					<div class="left"><a href="javascript:history.back();"><b class="f-icons">R</b></a></div>
+					<div class="right"></div>
+					<p class="ti">填写游客信息</p>
+				</div>
+			</header>
+			<div class="sb-item2 mb15">
+				<ul style="margin-bottom: 2vw;" v-for='index of adult_number'>
+					<div style="background: steelblue;color:white;line-height: 30px;padding: 0 3vw;">
+						成人{{index}}
+					</div>
+					<li>
+						<div class="left">
+							<p>
+								<font color="red"></font>姓名
+							</p>
+						</div>
+						<div class="right"><input placeholder="请输入真实姓名" name="link_man" :id="'adult_name_'+index" class="inp-txt" value="" notnull="true">
+						</div>
+					</li>
+			
+					<li>
+						<div class="left">
+							<p>
+								<font color="red"></font>身份证
+							</p>
+						</div>
+						<div class="right"><input placeholder="请输入身份证号码" name="link_phone" :id="'adult_id_'+index" class="inp-txt" value=""
+							 notnull="true">
+						</div>
+					</li>
+			
+					<li>
+						<div class="left">
+							<p>
+								<font color="red"></font>手机号码
+							</p>
+						</div>
+						<div class="right"><input placeholder="请输入中国大陆手机号码" name="link_phone" :id="'adult_phone_'+index" class="inp-txt" value=""
+							 notnull="true">
+						</div>
+					</li>
+				</ul>
+			
+				
+			
+				
+			
+				<ul style="margin-bottom: 2vw;" v-for='index of child_number'>
+					<div style="background: steelblue;color:white;line-height: 30px;padding: 0 3vw;">
+						儿童{{index}}
+					</div>
+					<li>
+						<div class="left">
+							<p>
+								<font color="red"></font>姓名
+							</p>
+						</div>
+						<div class="right"><input placeholder="请输入真实姓名" name="link_man" :id="'child_name_'+index" class="inp-txt" value="" notnull="true">
+						</div>
+					</li>
+			
+					<li>
+						<div class="left">
+							<p>
+								<font color="red"></font>身份证
+							</p>
+						</div>
+						<div class="right"><input placeholder="请输入身份证号码" name="link_phone" :id="'child_id_'+index" class="inp-txt" value=""
+							 notnull="true">
+						</div>
+					</li>
+			
+				</ul>
+			
+			</div>
+			
+			<div class="sb-item2 main mb15">
+				<div class="remark">
+					<p class="ti"><b class="f-icons">I</b>备注信息</p>
+					<div class="info"><textarea placeholder="可录入客人的一些情况和需求，价格信息备注无效" id='remark'></textarea></div>
+				</div>
+			</div>
+			
+			<!--信息框END-->
+			
+			<!--按钮固定层-->
+			<div class="btn-div">
+				<div class="btn-main">
+					<span class="price">订单总金额:<strong>{{total_price}}</strong>元</span>
+					<a class="btn btn-orange prompt-btn" v-if='!isPaying' v-on:click='post_order'>确认下单<b class="f-icons f14">C</b></a>
+					<a class="btn btn-orange prompt-btn" v-if='isPaying' style="background: #CDAA7D;border: 1px solid #CDAA7D;">正在下单<b class="f-icons f14">C</b></a>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript">
+			var agent = '';
+			if (document.domain == 'www.test.com') {
+				var agent = '/api'; // 用于跨域代理名称转化
+				console.log('测试环境')
+			} else {
+				console.log('线上环境')
+			}
+			new Vue({
+				el: '#vue',
+				data:{
+					pid: '',	// 产品id
+					mid: '',	// 套餐id
+					date: '',	// 出行日期
+					adult_number: 0,	// 成人数量
+					child_number: 0,	// 儿童数量
+					total_price: 0,		// 订单总价格
+					tourist: [],	// 游客信息
+					amount: 0,		// 套餐数量
+					orderId: '',	// 订单id
+					isPaying: false,	// 是否正在支付
+					alert: false,
+					alertContent: '提示'
+				},
+				methods: {
+					
+					// 提交订单
+					post_order: function(){
+						let that = this;
+						
+						var id_reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/; 	// 身份证正则
+						var phone_reg = /^1[3|4|5|6|7|8|9][0-9]\d{8,11}$/;	// 手机号码正则
+						this.tourist = [];
+						for(var i = 0;i<this.adult_number;i++){
+							var name = $('#adult_name_'+(i+1)).val();
+							var phone = $('#adult_phone_'+(i+1)).val();
+							var ident = $('#adult_id_'+(i+1)).val();
+							if(name == ''){
+								// alert('成人'+(i+1)+'姓名不能为空')
+								this.alert = true;
+								this.alertContent = '成人'+(i+1)+'姓名不能为空';
+								return false;
+							}
+							if(id_reg.test(ident) == false){
+								// alert('成人'+(i+1)+'身份证号码格式有误')
+								this.alert = true;
+								this.alertContent = '成人'+(i+1)+'身份证号码格式有误';
+								return false;
+							}
+							if(phone_reg.test(phone) == false){
+								// alert('成人'+(i+1)+'手机号码格式有误')
+								this.alert = true;
+								this.alertContent = '成人'+(i+1)+'手机号码格式有误';
+								return false;
+							}
+							this.tourist.push({
+								touristName: name,
+								touristTelphone: phone,
+								touristIdcard: ident,
+								touristType: 1,
+							})
+							console.log(this.tourist)
+						}
+						for(var i = 0;i<this.child_number;i++){
+							var name = $('#child_name_'+(i+1)).val();
+							// var phone = $('#child_phone_'+(i+1)).val();
+							var ident = $('#child_id_'+(i+1)).val();
+							if(name == ''){
+								// alert('儿童'+(i+1)+'姓名不能为空')
+								this.alert = true;
+								this.alertContent = '儿童'+(i+1)+'姓名不能为空';
+								return false;
+							}
+							if(id_reg.test(ident) == false){
+								// alert('儿童'+(i+1)+'身份证号码格式有误')
+								this.alert = true;
+								this.alertContent = '儿童'+(i+1)+'身份证号码格式有误';
+								return false;
+							}
+							this.tourist.push({
+								touristName: name,
+								// touristTelphone: phone,
+								touristIdcard: ident,
+								touristType: 2,
+							})
+							console.log(this.tourist)
+						}
+						if(this.amount < 1){
+							// alert('套餐数量不能为0')
+							this.alert = true;
+							this.alertContent = '套餐数量不能为0';
+							return false;
+						}
+						if(localStorage.getItem('weChatOpenId') == null){
+							window.location.href = 'index.html';
+							return false;
+						}
+						var remark = $('#remark').val();
+						var openid = localStorage.getItem('weChatOpenId');
+						
+						var data = {
+							inTime: this.date,
+							piId: Number(this.pid),
+							setMealId: Number(this.mid),
+							orderOpenId: openid,
+							totalPrice: Number(this.total_price)*100,
+							// adultPrice: 0,
+							// childPrice: 0,
+							// adultNum: this.adult_number,
+							// childNum: this.child_number,
+							remark: remark,
+							tourist: this.tourist,
+							setmealNum: this.amount,
+						}
+						console.log(data)
+						
+						// $.post(agent + "/lsmsManager/order/addOrder", data,
+						// 	function(data, status) {
+						// 		
+						// 	}
+						// );
+						
+						// 阻止重复提交
+						that.isPaying = true;
+						setTimeout(function(){
+							that.isPaying = false;
+						},5000)
+						
+						$.ajax({url:agent + "/lsmsManager/order/addOrder",
+							contentType:"application/json",
+							type: 'post',
+							data: JSON.stringify(data),
+							success:function(result){
+								if(result.state == 3){
+									// alert('')
+									console.log('订单已添加生成')
+									that.orderId = result.orderId;
+									that.get_pay()
+								}else{
+									// alert('添加订单失败')
+									this.alert = true;
+									this.alertContent = '添加订单失败';
+								}
+							},
+						});
+					},
+					
+					// 拉取支付订单的信息
+					get_pay: function(){
+						let that = this;
+						
+						if(that.orderId == ''){
+							// alert('没有订单')
+							this.alert = true;
+							this.alertContent = '没有订单';
+							return false;
+						}
+						if(localStorage.getItem('weChatOpenId') == null){
+							window.location.href = 'index.html';
+							return false;
+						}
+						
+						var data = {
+							orderId: that.orderId,
+							body: '下单成功',
+							totalFee: that.total_price*100,
+							payType: "tourist",
+							openId: localStorage.getItem('weChatOpenId'),
+						}
+						
+						// 拉取订单信息
+						$.get(agent + "/lsmsManager/weixin/pay", data,
+							function(data, status) {
+								console.log(data)
+								if(data.code == 0){
+									console.log('拉取成功')
+									that.pay_order(data.data)
+								}else if(data.code == 1){
+									console.log('拉取失败')
+									alert(data.errorMsg)
+								}
+							}
+						
+						);
+					},
+					
+					pay_order: function(data){
+						WeixinJSBridge.invoke(
+						  'getBrandWCPayRequest', data,
+						  function(res){
+							  console.log('通过')
+							  console.log(res)
+						  if(res.err_msg == "get_brand_wcpay_request:ok" ){
+							//  get_brand_wcpay_request:ok	支付成功
+							// get_brand_wcpay_request:cancel	支付过程中用户取消
+							// get_brand_wcpay_request:fail	支付失败
+						  // 使用以上方式判断前端返回,微信团队郑重提示：
+							//res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+							// alert('支付成功')
+							this.alert = true;
+							this.alertContent = '支付成功';
+							setTimeout(function(){
+								location.href='user.html'
+							},1000)
+						  } 
+					   }); 
+					},
+					
+					// appId: "wxb91238e9f2c2f688"
+					// nonceStr: "98sds4d9"
+					// package: "prepay_id=wx14172736470211ca9f6777a01160403500"
+					// paySign: "B84411857C61D65F50F8F63D3DEB561C"
+					// signType: "MD5"
+					// timeStamp: "1565774856520"
+					
+					
+				},
+				created: function(){
+					var url = decodeURI(location.href);	// 解码ascll
+					var parmList = url.split('?')[1].split('&');
+					var pid, mid, date, price, adult_number, child_number, amount;
+					parmList.forEach(function(value, index){	// 接收参数
+						var parmname = value.split('=')[0];
+						if(parmname == 'pid') pid = value.split('=')[1];
+						if(parmname == 'mid') mid = value.split('=')[1];
+						if(parmname == 'date') date = value.split('=')[1];
+						if(parmname == 'price') price = value.split('=')[1];
+						if(parmname == 'adult_number') adult_number = value.split('=')[1];
+						if(parmname == 'child_number') child_number = value.split('=')[1];
+						if(parmname == 'amount') amount = value.split('=')[1];
+					})
+					this.pid = pid;
+					this.mid = mid;
+					this.date = date;
+					this.total_price = price;
+					this.adult_number = Number(adult_number)*amount;
+					this.child_number = Number(child_number)*amount;
+					this.amount = amount;
+				}
+			})
+			
+		</script>
+	</body>
+</html>

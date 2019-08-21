@@ -1,0 +1,199 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=on">
+		<link href="static/css/m-reset_1.css" rel="stylesheet">
+		<link href="static/css/global1803.css" rel="stylesheet">
+
+		<link href="static/css/topic-style.css" rel="stylesheet">
+		<script src="static/js/jquery.min.js"></script>
+		<script src="static/js/currency_utils.js"></script>
+		<script src="static/js/global20170703.js"></script>
+
+
+
+		<title>会员登录</title>
+	</head>
+	<body class="bg-login2 main">
+		<div class="page-member">
+			<a class="btn-index" href="/m2c/?order_cust_id=393548">返回首页</a>
+			<div class="login2">
+				<div class="main">
+					<!--头部导航-->
+					<div class="m-cont">
+						<ul class="form-box">
+							<li>
+								<div class="item"><b class="iconfont icon-shouji"></b><input type="text" placeholder="用户名为手机号" id="mobile"
+									 class="inp-txt"></div>
+							</li>
+							<li>
+								<div class="item"><b class="iconfont icon-mima"></b><input type="password" placeholder="请输入密码" id="pass" class="inp-txt"></div>
+							</li>
+						</ul>
+						<div class="pm-item">
+							<p class="forget-password"><a>重置密码?</a></p>
+							<p class="comfir btn"><a href="javascript:login();">登录</a></p>
+						</div>
+						<div class="pm-item">
+							<p class="tips">还没有注册会员？</p>
+							<p class="register btn"><a href="register.html">快速注册</a></p>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+		<div class="mask-div"></div>
+		<div class="prompt-box">
+			<div class="pb-cont tips">
+				<img src="static/picture/tips.png">
+				<p></p>
+			</div>
+			<div class="pb-btn close"><a>关闭</a></div>
+		</div>
+		<div class="fp-pop">
+			<ul>
+				<li class="ti">输入手机号取回密码</li>
+				<li class="tel"><input type="text" class="inp-txt" placeholder="请输入手机号" id="vmobile"></li>
+				<li class="password"><input type="text" class="inp-txt" placeholder="验证码" id="vcode"><a class="btn security-code">获取验证码</a></li>
+				<li class="tips">验证码已发送至手机</li>
+				<li class="tel"><input type="password" class="inp-txt" placeholder="新密码" id="pass1"></li>
+				<li class="tel"><input type="password" class="inp-txt" placeholder="确认新密码" id="pass2"></li>
+				<li class="comfir"><a href="javascript:updatepass();">确定</a></li>
+			</ul>
+		</div>
+		<script language="javascript">
+			function login() {
+				var mobile = $("#mobile").val();
+				var pass = $("#pass").val();
+				if (mobile == '') {
+					promptBox1('请输入手机号码！');
+					document.getElementById('mobile').focus();
+				} else if (mobile != '' && pass == '') {
+					promptBox1('请输入登录密码！');
+					document.getElementById('pass').focus();
+				} else if (mobile != '' && pass.length < 6) {
+					promptBox1('登录密码不少于6位！');
+				} else {
+					$.ajax({
+						type: "post",
+						url: "login_ajax.jsp?action=login_1562240001150&logintype=mobile&mobile=" + $("#mobile").val() + "&pass=" + $(
+							"#pass").val(),
+						success: function(data) {
+							if (data.indexOf('true') != -1) {
+								promptBox1('登录成功！');
+								location.href = "http://lxy.ziwoyou.net/m2c/login.jsp";
+							} else {
+								promptBox1(data);
+							}
+						}
+					});
+				}
+			}
+			var is_c = 0;
+			$(function() {
+				$(".forget-password a").click(function() {
+					$(".fp-pop").fadeIn("fast");
+					$(".mask-div").fadeIn("fast");
+				});
+				$(".mask-div").click(function() {
+					$(".fp-pop").fadeOut("fast");
+				});
+				$(".security-code").click(function() {
+					var m = $('#vmobile').val();
+					if (m == '' || m.length != 11) {
+						promptBox1('请输入正确的手机号码！');
+						document.getElementById('vmobile').focus();
+						return;
+					}
+					var obj = $(this);
+					if (is_c == 0) {
+						is_c++;
+						$.ajax({
+							type: "post",
+							url: "login_ajax.jsp?action=findvcode&logintype=mobile&mobile=" + $("#vmobile").val(),
+							success: function(data) {
+								if (data.indexOf('true') != -1) {
+									obj.addClass("btn-w");
+									obj.parents().find(".tips").fadeIn("fast");
+									jsms();
+								} else {
+									promptBox1(data);
+								}
+							}
+						});
+					}
+				});
+
+				var codei = 60;
+
+				function jsms() {
+					$('.security-code').text(codei + "秒可重发");
+					codei--;
+					if (codei > 0) {
+						setInterval("jsms();", 1000);
+					} else {
+						is_c = 0;
+						$('.security-code').text("获取验证码");
+						$('.security-code').removeClass("btn-w");
+						$('.security-code').parents().find(".tips").fadeOut("fast");
+					}
+				}
+			});
+
+			var is_f = 0;
+
+			function updatepass() {
+				if (is_f > 0) {
+					return;
+				}
+
+				var mobile = $("#vmobile").val();
+				if (mobile == '') {
+					promptBox1('请输入手机号码！');
+					document.getElementById('vmobile').focus();
+					return;
+				}
+				var pass = $("#pass1").val();
+				var pass2 = $("#pass2").val();
+				if (pass == '') {
+					promptBox1('请输入新密码！');
+					document.getElementById('pass1').focus();
+					return;
+				} else if (pass.length < 6) {
+					promptBox1('密码不少于6位！');
+					document.getElementById('pass1').focus();
+					return;
+				}
+				if (pass != pass2) {
+					promptBox1('密码跟确认密码不一致，请重新输入！');
+					return;
+				}
+				var vcode = $('#vcode').val();
+				if (vcode == '' || vcode.length != 6) {
+					promptBox1('请输入6位数字的验证码！');
+					return;
+				}
+				is_f++;
+				$.ajax({
+					type: "post",
+					url: "login_ajax.jsp?action=updatepass&pass=" + pass + "&logintype=mobile&mobile=" + mobile + "&vcode=" + vcode,
+					success: function(data) {
+						if (data.indexOf('true') != -1) {
+							promptBox1('已经重置密码并登录！');
+							location.href = "http://lxy.ziwoyou.net/m2c/login.jsp";
+						} else {
+							promptBox1(data);
+						}
+					}
+				});
+			}
+		</script>
+	</body>
+
+
+</html>

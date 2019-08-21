@@ -1,0 +1,620 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=on">
+		<link href="static/css/m-reset.css" rel="stylesheet">
+		<link href="static/css/global1803.css" rel="stylesheet">
+		<link href="static/css/topic-style.css" rel="stylesheet">
+		<link href="static/css/user.css" rel="stylesheet" />
+		<link href="static/css/global2019.css" rel="stylesheet">
+		<script src="static/js/Vue2.0.js"></script>
+		<script src="static/js/jquery.min.js"></script>
+		<script src="static/js/jquery.cookie.js"></script>
+		<script src="static/js/currency_utils.js"></script>
+		<script src="static/js/global20170703.js"></script>
+		<title>趣稚旅游 - 个人中心</title>
+	</head>
+	<body class="bg w">
+		<div id="vue">
+			
+			<!-- 自己编写的alert弹框 -->
+			<div class="alertSelf" v-if='alert'>
+				<div class="windowSelf">
+					<div class="contentSelf">
+						{{alertContent}}
+					</div>
+					<div class="buttonSelf">
+						<div id="alertConfirm" v-on:click="alert=false">好的</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="xw-header">
+				<div class="icon">
+					<img :src="userIcon" >
+				</div>
+				<div class="nickname">
+					{{userName}}
+				</div>
+			</div>
+			<div class="top-height h9">
+				<div class="top-fixed">
+					<!--头部导航-->
+					<header class="top">
+						<div class="main">
+							<p class="ti order_manager">订单管理</p>
+						</div>
+					</header>
+			
+					<div class="order-screening">
+						<div class="tab-menu main">
+							<ul class="tab-ctrl">
+								<li :class="{sel:nav_index==0}" v-on:click='nav_select(0)'>全部</li>
+								<!-- <li :class="{sel:nav_index==1}" v-on:click='nav_select(1)'>待确定</li> -->
+								<li :class="{sel:nav_index==2}" v-on:click='nav_select(2)'>待支付</li>
+								<li :class="{sel:nav_index==3}" v-on:click='nav_select(3)'>已支付</li>
+								<li :class="{sel:nav_index==4}" v-on:click='nav_select(4)'>已取消</li>
+								<li :class="{sel:nav_index==5}" v-on:click='nav_select(5)'>已完成</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!--头部导航EDN-->
+			
+			</div>
+			<div class="wrapper">
+				<!--订单列表-->
+				<div class="order-list main">
+					
+					<!-- 全部订单 -->
+					<ul id="conlist total_order" class="conlist" v-if='nav_index==0'>
+						<div style="text-align: center;margin: 10vw;" v-if='orderTotal.length == 0'>
+							<img src="static/images/none.png" style="width: 10vw;height: 10vw;">
+							<div style="margin-top: 10px;">
+								没有相关
+							</div>
+						</div>
+						<li class="xw-block" v-for='(item,index) in orderTotal'>
+							<div class="xw-order-header">
+								订单号: {{item.orderCode}}
+								<span v-if='item.state == "1S"'>未支付</span>
+								<span v-if='item.state == "1M"'>已取消</span>
+								<span v-if='item.state == "1P"'>已支付</span>
+								<span v-if='item.state == "1F"'>已支付</span>
+							</div>
+							<div class="xw-order-content">
+								<div class="xw-order-title">
+									{{item.piName}}
+								</div>
+								<div class="xw-order-set-meal">
+									套餐: {{item.setMealName}}
+								</div>
+								<div class="xw-order-price">
+									实付: ￥{{(item.totalPrice/100).toFixed(2)}}
+								</div>
+							</div>
+							<div class="xw-order-bottom">
+								订单时间： {{item.createTime}}
+								<span v-on:click='cancelOrder(item.orderId)' v-if='item.state == "1S"'>取消订单</span>
+								<span v-if='item.state == "1S"' style="margin-right: 1vw;" v-on:click='order_pay(item.orderId, item.totalPrice)'>去支付</span>
+							</div>
+						</li>
+						
+						
+					</ul>
+					
+					<!-- 待确认订单 -->
+					<ul id="conlist wait_confirm_order" class="conlist"  v-if='nav_index==1'>
+						<li class="xw-block" v-for='(item,index) in orderWait'>
+							<div class="xw-order-header">
+								订单号: {{item.orderCode}}
+								<span>未确认</span>
+							</div>
+							<div class="xw-order-content">
+								<div class="xw-order-title">
+									{{item.piName}}
+								</div>
+								<div class="xw-order-set-meal">
+									套餐: {{item.setMealName}}
+								</div>
+								<div class="xw-order-price">
+									实付: ￥{{(item.totalPrice/100).toFixed(2)}}
+								</div>
+							</div>
+							<div class="xw-order-bottom">
+								订单时间： {{item.createTime}}
+								<span>去确认</span>
+							</div>
+						</li>
+						
+						
+					</ul>
+					
+					<!-- 待支付订单 -->
+					<ul id="conlist wait_pay_order" class="conlist"  v-if='nav_index==2'>
+						<div style="text-align: center;margin: 10vw;" v-if='orderWait.length == 0'>
+							<img src="static/images/none.png" style="width: 10vw;height: 10vw;">
+							<div style="margin-top: 10px;">
+								没有相关
+							</div>
+						</div>
+						<li class="xw-block" v-for='(item,index) in orderWait'>
+							<div class="xw-order-header">
+								订单号: {{item.orderCode}}
+								<span>未支付</span>
+							</div>
+							<div class="xw-order-content">
+								<div class="xw-order-title">
+									{{item.piName}}
+								</div>
+								<div class="xw-order-set-meal">
+									套餐: {{item.setMealName}}
+								</div>
+								<div class="xw-order-price">
+									实付: ￥{{(item.totalPrice/100).toFixed(2)}}
+								</div>
+							</div>
+							<div class="xw-order-bottom">
+								订单时间： {{item.createTime}}
+								<span v-on:click='cancelOrder(item.orderId)'>取消订单</span>
+								<span style="margin-right: 1vw;" v-on:click='order_pay(item.orderId, item.totalPrice)'>去支付</span>
+							</div>
+						</li>
+						
+					</ul>
+					
+					<!-- 已支付订单 -->
+					<ul id="conlist payed_order" class="conlist"  v-if='nav_index==3'>
+						<div style="text-align: center;margin: 10vw;" v-if='orderPay.length == 0'>
+							<img src="static/images/none.png" style="width: 10vw;height: 10vw;">
+							<div style="margin-top: 10px;">
+								没有相关
+							</div>
+						</div>
+						<li class="xw-block" v-for='(item,index) in orderPay'>
+							<div class="xw-order-header">
+								订单号: {{item.orderCode}}
+								<span>已支付</span>
+							</div>
+							<div class="xw-order-content">
+								<div class="xw-order-title">
+									{{item.piName}}
+								</div>
+								<div class="xw-order-set-meal">
+									套餐: {{item.setMealName}}
+								</div>
+								<div class="xw-order-price">
+									实付: ￥{{(item.totalPrice/100).toFixed(2)}}
+								</div>
+							</div>
+							<div class="xw-order-bottom">
+								订单时间： {{item.createTime}}
+								<span>确认完成</span>
+							</div>
+						</li>
+						
+					</ul>
+					
+					<!-- 已取消订单 -->
+					<ul id="conlist cancel_order" class="conlist" v-if='nav_index==4'>
+						<div style="text-align: center;margin: 10vw;" v-if='orderCancel.length == 0'>
+							<img src="static/images/none.png" style="width: 10vw;height: 10vw;">
+							<div style="margin-top: 10px;">
+								没有相关
+							</div>
+						</div>
+						<li class="xw-block" v-for='(item,index) in orderCancel'>
+							<div class="xw-order-header">
+								订单号: {{item.orderCode}}
+								<span>已取消</span>
+							</div>
+							<div class="xw-order-content">
+								<div class="xw-order-title">
+									{{item.piName}}
+								</div>
+								<div class="xw-order-set-meal">
+									套餐: {{item.setMealName}}
+								</div>
+								<div class="xw-order-price">
+									实付: ￥{{(item.totalPrice/100).toFixed(2)}}
+								</div>
+							</div>
+							<div class="xw-order-bottom">
+								订单时间： {{item.createTime}}
+								<!-- <span>去支付</span> -->
+							</div>
+						</li>
+						
+						
+					</ul>
+					
+					<!-- 已完成订单 -->
+					<ul id="conlist finish_order" class="conlist"  v-if='nav_index==5'>
+						<div style="text-align: center;margin: 10vw;" v-if='orderFinish.length == 0'>
+							<img src="static/images/none.png" style="width: 10vw;height: 10vw;">
+							<div style="margin-top: 10px;">
+								没有相关
+							</div>
+						</div>
+						<li class="xw-block" v-for='(item,index) in orderFinish'>
+							<div class="xw-order-header">
+								订单号: {{item.orderCode}}
+								<span>已完成</span>
+							</div>
+							<div class="xw-order-content">
+								<div class="xw-order-title">
+									{{item.piName}}
+								</div>
+								<div class="xw-order-set-meal">
+									套餐: {{item.setMealName}}
+								</div>
+								<div class="xw-order-price">
+									实付: ￥{{(item.totalPrice/100).toFixed(2)}}
+								</div>
+							</div>
+							<div class="xw-order-bottom">
+								订单时间： {{item.createTime}}
+								<span>去支付</span>
+							</div>
+						</li>
+						
+					</ul>
+					
+				</div>
+				<!--订单列表END-->
+			
+			</div>
+			
+			
+			<div class="menu-bar">
+				<div class="mb-fixed">
+					<div class="mb-cont">
+						<ul class="mb-list">
+							<li class="item"><a class="center" href="index.html"><span class="icon-home iconfont"></span>
+									<p class="ti">首页</p>
+								</a></li>
+			
+							<li class="item more-ctrl">
+								<div class="center"><span class="icon-classify iconfont"></span>
+									<p class="ti">分类</p>
+								</div>
+							</li>
+							
+							<!-- <li class="item" onclick="location.href='car.html'">
+								<div class="center"><img style="height:30px;width:30px;" src="static/images/car.png" >
+									<p class="ti">购物车</p>
+								</div>
+							</li> -->
+			
+							<li class="sel item"><a class="center" href="###"><span class="icon-my iconfont"></span>
+									<p class="ti">个人中心</p>
+								</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="menu-bar-more">
+				<div class="menu-bar-mask"></div>
+				<div class="mm-cont">
+					<div class="mm-list">
+						<!--菜单栏-->
+			
+			
+						<a class="item" :href="'category.html?id='+item.id" v-for='(item,index) in classification'>
+							<img :src="item.classification_picture" style="width:80%;">
+							<p class="ti">{{item.classification_info}}
+							</p>
+						</a>
+			
+						<div class="iconfont icon-arrow more-hide"></div>
+			
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<script type="text/javascript">
+			var agent = '';
+			if (document.domain == 'www.test.com') {
+				var agent = '/api'; // 用于跨域代理名称转化
+				console.log('测试环境')
+			} else {
+				console.log('线上环境')
+			}
+			
+			var currentTimestamp = new Date().getTime();
+			var expire = localStorage.getItem('expire');
+			if(localStorage.getItem('weChatOpenId') == null) {
+				window.location.href = 'index.html';
+			}else{
+				if(!expire == null){
+					if(expire < currentTimestamp){
+						localStorage.removeItem('weChatCity');
+						localStorage.removeItem('weChatCountry');
+						localStorage.removeItem('weChatHeadImg');
+						localStorage.removeItem('weChatName');
+						localStorage.removeItem('weChatOpenId');
+						localStorage.removeItem('weChatProvince');
+						localStorage.removeItem('weChatSex');
+						window.location.href = 'index.html';
+					}
+				}
+			}
+			
+			new Vue({
+				el: '#vue',
+				data: {
+					nav_index: 0,
+					orderWait: [],
+					orderPay: [],
+					orderCancel: [],
+					orderFinish: [],
+					orderTotal: [],
+					classification: [],
+					userName: '',
+					userIcon: '',
+					openid: '',
+					alert: false,
+					alertContent: '提示'
+				},
+				methods: {
+					nav_select: function(index){
+						this.nav_index = index;
+					},
+					
+					// 取消订单
+					cancelOrder: function(orderId){
+						let that = this;
+						// 查询订单数据(已支付)
+						$.post(agent + "/lsmsManager/order/delOrder", { 
+								openId: that.openid,
+								id: orderId,
+							},
+							function(data, status) {
+								if(data.state == 3){
+									alert(data.msg)
+									// 查询订单数据(未支付)
+									that.getOrderList('1S')
+									
+									// 查询订单数据(已支付)
+									that.getOrderList('1P')
+									
+									// 查询订单数据(已完成)
+									that.getOrderList('1F')
+									
+									// 查询订单数据(已取消)
+									that.getOrderList('1M')
+									
+									// 查询订单数据(全部)
+									that.getOrderList('')
+								}else{
+									alert(data.msg)
+								}
+						});
+					},
+					
+					// 获取订单列表
+					getOrderList: function(type){
+						let that = this;
+						if(type == '1S'){	// 未支付
+							$.get(agent + "/lsmsManager/order/myorderList", { 
+									orderOpenId: that.openid,
+									state: "1S",
+								},
+								function(data, status) {
+									that.orderWait = data;
+							});
+						}
+						if(type == '1P'){	// 已支付
+							$.get(agent + "/lsmsManager/order/myorderList", { 
+									orderOpenId: that.openid,
+									state: "1P",
+								},
+								function(data, status) {
+									that.orderPay = data;
+							});
+						}
+						if(type == '1F'){	// 已完成
+							$.get(agent + "/lsmsManager/order/myorderList", { 
+									orderOpenId: that.openid,
+									state: "1F",
+								},
+								function(data, status) {
+									that.orderFinish = data;
+							});
+						}
+						if(type == '1M'){	// 已取消
+							$.get(agent + "/lsmsManager/order/myorderList", { 
+									orderOpenId: that.openid,
+									state: "1M",
+								},
+								function(data, status) {
+									that.orderCancel = data;
+							});
+						}
+						if(type == ''){		// 全部
+							$.get(agent + "/lsmsManager/order/myorderList", { 
+									orderOpenId: that.openid,
+									state: "",
+								},
+								function(data, status) {
+									that.orderTotal = data;
+							});
+						}
+					},
+					
+					// 订单支付
+					order_pay: function(orderId, totalPrice){
+						let that = this;
+						
+						if(localStorage.getItem('weChatOpenId') == null){
+							location.href='index.html'
+							return false;
+						}
+						
+						var data = {
+							orderId: orderId,
+							body: '下单成功',
+							totalFee: totalPrice,
+							payType: "tourist",
+							openId: localStorage.getItem('weChatOpenId'),
+						}
+						
+						// 拉取订单信息
+						$.get(agent + "/lsmsManager/weixin/pay", data,
+							function(data, status) {
+								console.log(data)
+								if(data.code == 0){
+									console.log('拉取成功')
+									that.pay_order(data.data)
+								}else if(data.code == 1){
+									console.log('拉取失败')
+									alert(data.errorMsg)
+								}
+							}			
+						);
+					},
+					
+					// 调起微信支付
+					pay_order: function(data){
+						let that = this;
+						WeixinJSBridge.invoke(
+						  'getBrandWCPayRequest', data,
+						  function(res){
+							  console.log('通过')
+							  console.log(res)
+						  if(res.err_msg == "get_brand_wcpay_request:ok" ){
+							//  get_brand_wcpay_request:ok	支付成功
+							// get_brand_wcpay_request:cancel	支付过程中用户取消
+							// get_brand_wcpay_request:fail	支付失败
+						  // 使用以上方式判断前端返回,微信团队郑重提示：
+							//res.err_msg将在用户支付成功后返回ok，但并不保证它绝对可靠。
+							// alert('支付成功')
+							this.alert = true;
+							this.alertContent = "支付成功";
+
+							// 查询订单数据(未支付)
+							that.getOrderList('1S')
+							
+							// 查询订单数据(已支付)
+							that.getOrderList('1P')
+							
+							// 查询订单数据(已完成)
+							that.getOrderList('1F')
+							
+							// 查询订单数据(已取消)
+							that.getOrderList('1M')
+							
+							// 查询订单数据(全部)
+							that.getOrderList('')
+						  } 
+					   }); 
+					},
+				},
+				created: function(){
+					let that = this;
+					that.userName = localStorage.getItem('weChatName')
+					that.userIcon =  localStorage.getItem('weChatHeadImg')
+					that.openid = localStorage.getItem('weChatOpenId');
+					
+					// 查询订单数据(未支付)
+					that.getOrderList('1S')
+					
+					// 查询订单数据(已支付)
+					that.getOrderList('1P')
+					
+					// 查询订单数据(已完成)
+					that.getOrderList('1F')
+					
+					// 查询订单数据(已取消)
+					that.getOrderList('1M')
+					
+					// 查询订单数据(全部)
+					that.getOrderList('')
+					
+					// 查询分类类型
+					$.post(agent + "/lsmsManager/classification/queryForPage", {},
+						function(data, status) {
+							var data = data.filter(function(val, index) {
+								val.classification_picture = agent + '/imgaes/' + val.classification_picture.substring(0, val.classification_picture.length - 1);
+								return index < 4;
+							})
+							that.classification = data;
+					
+					});
+						
+						
+					$(function() {
+						$('.tab-classify-ctrl li').click(function() {
+							var i = $(this).index();
+							$(this).addClass('sel').siblings().removeClass('sel');
+							$(this).parents('.tab-classify').find('.tab-classify-item').hide();
+							$(this).parents('.tab-classify').find('.tab-classify-item').eq(i).show();
+						});
+						imgClip(".hot-list .img", 2);
+						imgClip(".hot-list.single .img", 2);
+						imgClip(".banner .sw-item", 2);
+					
+						//img-clip
+						function imgClip(e, s) {
+							var w = $(e).width();
+							var h = parseInt(w / s);
+							$(e).each(function() {
+								$(this).css("height", h);
+								var ih = $(this).find("img").height();
+								if (ih < h) {
+									$(this).find("img").css("height", "100%")
+								}
+							});
+						};
+					
+						$('.menu-bar .more-ctrl').click(function() {
+							menuBarShow();
+						});
+						$('.menu-bar-more .more-hide').click(function() {
+							menuBarHide();
+						});
+						$('.menu-bar-more .menu-bar-mask').click(function() {
+							menuBarHide();
+						});
+					
+						function menuBarShow() {
+							$('.menu-bar-mask').fadeIn('fast');
+							$('.menu-bar-more').addClass('in');
+							$('body').addClass('disable');
+						}
+					
+						function menuBarHide() {
+							$('.menu-bar-mask').fadeOut('fast');
+							$('.menu-bar-more').removeClass('in');
+							$('body').removeClass('disable');
+						}
+					
+						$('.infomation-history-ctrl').click(function() {
+							popupWrapShow('.infomation-history-wrap');
+						});
+						$('.popup-wrap .btn-close').click(function() {
+							popupWrapHide();
+						});
+					
+						function popupWrapShow(ojb) {
+							$(ojb).fadeIn('fast');
+							$('body').addClass('disable');
+						}
+					
+						function popupWrapHide() {
+							$('.popup-wrap').fadeOut('fast');
+							$('body').removeClass('disable');
+						}
+					
+					});
+				}
+			})
+			
+		</script>
+	</body>
+</html>

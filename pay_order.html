@@ -1,0 +1,219 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=on">
+		<link href="static/css/m-reset.css" rel="stylesheet">
+		<link href="static/css/global20170313.css" rel="stylesheet">
+		<link href="static/theme/blue.css" rel="stylesheet">
+		<link href="static/css/topic-style.css" rel="stylesheet">
+		<link href="static/css/global2019.css" rel="stylesheet">
+		<script src="static/js/Vue2.0.js" type="text/javascript" charset="utf-8"></script>
+		<script src="static/js/jquery.min.js"></script>
+		<script src="static/js/currency_utils.js"></script>
+		<script src="static/js/global20170703.js"></script>
+		<title>下单--填写预订信息</title>
+	</head>
+
+	<body class="bg">
+		<div id="vue">
+			
+			<!-- 自己编写的alert弹框 -->
+			<div class="alertSelf" v-if='alert'>
+				<div class="windowSelf">
+					<div class="contentSelf">
+						{{alertContent}}
+					</div>
+					<div class="buttonSelf">
+						<div id="alertConfirm" v-on:click="alert=false">好的</div>
+					</div>
+				</div>
+			</div>
+			
+			<!--头部导航-->
+			<header class="top">
+				<div class="main">
+					<div class="left"><a href="javascript:history.back();"><b class="f-icons">R</b></a></div>
+					<div class="right"></div>
+					<p class="ti">填写预订信息</p>
+				</div>
+			</header>
+			<!--头部导航EDN-->
+			<form action="user_info.html" style="padding: 0px;margin: 0px;" name="f1" id="f1" method="post">
+				<input type="hidden" name="sdate" id="sdate" value="2019-07-16">
+				<input type="hidden" name="info_id" value="9458916">
+				<input type="hidden" name="tree_id" value="0">
+				<!--信息框-->
+				<div class="sb-item mb15">
+					<div class="sb-ti detail mb15">
+						<p>{{name}}</p>
+			
+						<span class="date">游玩日期：{{date.split(' ')[0]}}({{week}})</span>
+			
+					</div>
+					<div class="sb-ti">【数量选择】</div>
+					<ul class="countPrice productPrice" id="numlist">
+			
+						<li>
+							<span style="padding-right: 10vw;">套餐数量</span>
+							<span style="font-size: 1rem;">单价<strong class="unitPrice" style="font-size: 1.6rem;color:red;">￥{{price}}</strong>
+			
+							</span>
+							<span class="number right" style="margin-top:10px;"><a v-on:click='amount_minus' class="none minus" min="1">-</a><span><input type="text" min="1" max="10000" class="no notext"
+									 name="num" :value="amount"></span><a v-on:click='amount_add' class="add" max="100">+</a></span>
+						</li>
+						
+						
+						<li class="sb-bt"><p class="price">合计：￥<strong class="countPrice">{{total_price}}</strong>元</p></li>
+						
+					</ul>
+			
+					<!-- <div class="agreement main"><input type="checkbox" class="select" id="agreexy">我已经查看<a class="ti" name="agreexy"
+						 href="javascript:showdesc();">预订须知</a>,并同意该内容。</div> -->
+				</div>
+				<!--信息框END-->
+				<input type="hidden" name="totalCount" id="totalCount" value="0">
+			</form>
+			<!--按钮固定层-->
+			<div class="btn-div">
+				<div class="btn-main">
+					<span class="price">订单总金额:<strong class="totalCount">{{total_price}}</strong>元</span><a href="javascript:;" v-on:click='go' class="btn btn-orange">去填写游客信息<b
+						 class="f-icons f14">C</b></a>
+				</div>
+			</div>
+			<!--按钮固定层END-->
+			<!-- 确认框 -->
+			<div id="comfrim" style="border: 1px solid #000;width: 100%;margin: auto;height: 100%;position: fixed;left: 0px;top: 0px;background: rgba(0, 0, 0, 0.6) none repeat scroll 0% 0%;overflow: auto;text-align: center;display: none;">
+				<div style="background: white;width: 220px;height: 130px;left: 50%;top: 50%;margin-top: -100px;margin-left: -100px;border-radius: 5px; position: fixed;">
+					<div style="height: 90px;border-bottom: 1px solid #CCCCCC;">
+						<!-- 框内内容 -->
+						<div style="font-size: 1.2rem;padding-top: 40px;" id="comfirmtxt"></div>
+					</div>
+					<div style="height: 39px;">
+						<div onclick="cancel()" style="float: left;width: 50%;height: 39px;border-right: 1px solid #CCCCCC;line-height: 39px;font-size: 1.2rem">取消</div>
+						<div onclick="sub2()" style="float: right;width: 49%;height: 39px;line-height: 39px;font-size: 1.2rem;color:#01568C">确定</div>
+					</div>
+				</div>
+			</div>
+			<!-- 确认框end -->
+			<div class="mask-div"></div>
+			<div class="prompt-box">
+				<div class="prompt-con"></div>
+				<div class="pb-btn"><a class="close">关闭</a></div>
+			</div>
+			<div style="display:none" id="order_desc">
+				<p><img title="5555_看图王.jpg" style="float:none;" src="http://qnimg.zowoyoo.com/img/381756/1524027815866.jpg" border="0"
+					 vspace="0" hspace="0"></p>
+				<p><br></p>
+				<p>免预约，凭短信验证码直接到景区营销中心验证换票入园</p>
+				<p><br></p>
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+			
+			new Vue({
+				el:"#vue",
+				data:{
+					total_price: 0,	// 订单总价
+					adult_number: 0,	// 成人数量
+					amount: 1,	// 购买套餐数量
+					price: 0,	// 套餐单价
+					child_number: 0,	// 儿童数量
+					pid: '',	// 预约产品id
+					mid: '',	// 预约套餐id
+					date: '',	// 预约的门票日期
+					name: '',	// 产品的名称
+					week: '',	// 星期几
+					stock: 0,	// 所选日期库存
+					alert: false,
+					alertContent: '提示'
+				},
+				created:function(){
+					var url = decodeURI(location.href);	// 解码ascll
+					var parmList = url.split('?')[1].split('&');
+					var pid, mid, date, name, price, adult_number, child_number, stock;
+					
+					parmList.forEach(function(value, index){	// 接收参数
+						var parmname = value.split('=')[0];
+						if(parmname == 'pid') pid = value.split('=')[1];
+						if(parmname == 'mid') mid = value.split('=')[1];
+						if(parmname == 'date') date = value.split('=')[1];
+						if(parmname == 'name') name = value.split('=')[1];
+						if(parmname == 'price') price = value.split('=')[1];
+						if(parmname == 'adult_number') adult_number = value.split('=')[1];
+						if(parmname == 'child_number') child_number = value.split('=')[1];
+						if(parmname == 'stock') stock = value.split('=')[1];
+					})
+					
+					var weekArray = ['日','一','二','三','四','五','六'];
+					var week = new Date(date.split(' ')[0]).getDay();
+					this.pid = pid;
+					this.mid = mid;
+					this.date = date;
+					this.name = name;
+					this.price = price;
+					this.adult_number = adult_number;
+					this.child_number = child_number;
+					this.week = '周'+weekArray[week];
+					this.total_price = this.price*this.amount
+					this.stock = stock;
+				},
+				methods: {
+					
+					// 套餐增加
+					amount_add: function(){
+						if(this.amount == this.stock){
+							// alert('所选日期库存不足')
+							this.alert = true;
+							this.alertContent = "所选日期库存不足";
+							return false;
+						}
+						this.amount++;
+						this.total_money();
+					},
+					
+					// 套餐减少
+					amount_minus: function(){
+						if(!this.amount > 0){
+							return false;
+						}
+						this.amount--;
+						this.total_money();
+					},
+					
+					
+					// 计算总价
+					total_money: function(){
+						this.total_price = this.price*this.amount;
+					},
+					// 去填写
+					go:function(){
+						if(!this.total_price > 0){
+							// alert('订单金额小于0')
+							this.alert = true;
+							this.alertContent = "订单金额小于0";
+							return false;
+						}
+						var pid = this.pid;
+						var mid = this.mid;
+						var date = this.date;
+						var price = this.total_price;
+						var adult_number = this.adult_number;
+						var child_number = this.child_number;
+						var amount = this.amount;
+						// var url = 'user_info.html?pid='+pid+'&mid='+mid+'&date='+date+'&price='+price+'&adult_number='+adult_number+'&child_number='+child_number;
+						var url = 'user_info.html?pid='+pid+'&mid='+mid+'&date='+date+'&price='+price+'&adult_number='+adult_number+'&child_number='+child_number+'&amount='+amount;
+						location.href= url;
+					}
+				}
+			})
+			
+		</script>
+
+
+
+	</body>
+</html>

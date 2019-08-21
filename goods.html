@@ -1,0 +1,782 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=on">
+		<link href="static/css/m-reset_1.css" rel="stylesheet">
+		<link href="static/css/global1803.css" rel="stylesheet">
+		<link href="static/css/global19.css" rel="stylesheet">
+		<link href="static/css/topic-style.css" rel="stylesheet">
+		<link href="static/css/global2019.css" rel="stylesheet">
+		<script src="static/js/Vue2.0.js"></script>
+		<script src="static/js/jquery.min.js"></script>
+		<script src="static/js/jquery.cookie.js"></script>
+		<script src="static/js/currency_utils.js"></script>
+		<script src="static/js/global20170703.js"></script>
+		<meta name="referrer" content="no-referrer" />
+		<title>趣稚旅游 - 产品详情</title>
+	</head>
+	<body class="bg w">
+		<div id="vue">
+			
+			<!-- 自己编写的alert弹框 -->
+			<div class="alertSelf" v-if='alert'>
+				<div class="windowSelf">
+					<div class="contentSelf">
+						{{alertContent}}
+					</div>
+					<div class="buttonSelf">
+						<div id="alertConfirm" v-on:click="alert=false">好的</div>
+					</div>
+				</div>
+			</div>
+			
+			
+			<!--产品图片-->
+			<div class="product-photo">
+				<div class="img-box">
+					<div class="siema boxTxt">
+						<div class="box" :class="index+1" v-for='(item, index) in produceInfo.pi_picture'>
+							<img :src="item" >
+						</div>
+					</div>
+					<!-- <div class="photo"><img :src="item" v-for='item in produceInfo.pi_picture'></div> -->
+					<div class="btn-box">
+						<div class="bb-left"><a class="btn-item" href="javascript:;" onClick="javascript:history.back(-1);"><b class="iconfont icon-back1"></b></a>
+						</div>
+<!-- 						<div class="bb-right"><a class="btn-item" href="/m2c/2/nav12.jsp?order_cust_id=522336&user_id=xs19920721"><b class="iconfont icon-search"></b></a>
+							<a class="btn-item" href="####" onclick="goMember();"><b class="iconfont icon-my"></b></a></div>
+ -->					</div>
+					<!-- <div class="tags">
+
+					</div> -->
+					
+					<div class="banner-spot">
+						<span :class="{on: index == banner_index}" v-for='(item, index) in produceInfo.pi_picture'></span>
+					</div>
+				</div>
+			</div>
+			<!--产品图片END-->
+			<div class="detail-infobox main">
+				<div class="price-box">
+					<div class="flex-box">
+						<div class="price-item">
+							<div class="price1">
+								<div class="number">￥<strong>{{produceInfo.pi_price}}</strong> 起</div>
+								<div class="del"> (市场价：￥{{produceInfo.pi_market_price}})</div>
+							</div>
+						</div>
+
+						<div class="sold">已售<span class="number">{{produceInfo.pi_stock}}</span>件</div>
+
+
+					</div>
+				</div>
+				<div class="title">{{produceInfo.pi_name}}</div>
+				<div class="tips-box">
+
+				</div>
+			</div>
+
+			<!--产品图片END-->
+
+			<div class="expand-box">
+				<div class="box-top">
+					<div class="flex-box">
+						<div class="left">全部套餐</div>
+					</div>
+					<div class="selbox">
+						<div class="option-box">
+							<div v-for='(item,index) in produceMeal'>
+								<a :class="{meal_on: mealIndex == index}" v-on:click='mealSelect(index)'>
+									<strong>￥{{item.set_meal_price}}起</strong>
+									{{item.set_meal_name}}
+								</a>
+							</div>
+							
+							
+							<!-- <a href="/m2c/2/ticket.jsp?info_id=9458916&amp;tree_id=0&amp;order_cust_id=465729&amp;user_id=nfzl">
+								<strong>￥198起</strong>
+								清泉湾空中玻璃漂+极速漂流+动感水城 成人票（即买即用 免预约）</a>
+
+							<a href="/m2c/2/ticket.jsp?info_id=22151295&amp;tree_id=0&amp;order_cust_id=465729&amp;user_id=nfzl" class="sel">
+								<strong>￥148起</strong>
+								清泉湾空中玻璃漂+极速漂流 成人票（即买即用 免预约）</a>
+
+							<a href="/m2c/2/ticket.jsp?info_id=22151301&amp;tree_id=0&amp;order_cust_id=465729&amp;user_id=nfzl">
+								<strong>￥90起</strong>
+								清泉湾动感水城 成人票（即买即用 免预约）</a> -->
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="stick-tabbox">
+				<div class="st-ctrl">
+					<ul>
+						<li class="sel"><a href="#part1" class="part1">价格</a></li>
+
+						<li><a href="#part2" class="part2">预订须知</a></li>
+
+						<li><a href="#part3" class="part3">产品描述</a></li>
+						<!-- <li><a href="#part4" class="part4">类似产品</a></li> -->
+					</ul>
+				</div>
+			</div>
+
+			<!--折叠列表-->
+			<div class="fold-block main stick-tabcont">
+				<div class="st-item" id="part1">
+
+					<div class="c" id="price_date" name="price_date">
+						<div class="fb-top">
+							<span class="left"><b class="iconfont icon-rili"></b>价格日历</span><span class="right"><b class="iconfont icon-arrow"></b></span>
+							<div class="clear"></div>
+						</div>
+						<div id="plan_div" class="fb-cont tips-htype">
+
+						</div>
+						<div class="fb-cont" id="pricecal">
+
+
+							<div class="calendar-box cal-price double">
+								<div class="calendar main">
+									<div class="c-year">
+										<ul>
+											<li class="prev"><a v-on:click='next_month(0)'><b class="iconfont icon-back1"></b></a></li>
+											<li class="date">{{year}}年{{month}}月</li>
+											<li class="next"><a v-on:click='next_month(1)'><b class="iconfont icon-enter"></b></a></li>
+										</ul>
+									</div>
+									<div class="c-week"><span>日</span><span>一</span><span>二</span><span>三</span><span>四</span><span>五</span><span>六</span></div>
+									<div class="c-day">
+										<ul id="cal_new">
+											
+										</ul>
+									</div>
+								</div>
+
+								<div class="tips">
+									<p class="txt"></p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="st-item" id="part2">
+					<div class="fb-item">
+						<div class="fb-top">
+							<span class="left"><b class="iconfont icon-tishi1"></b>预订须知</span><span class="right"><b class="iconfont icon-arrow"></b></span>
+							<div class="clear"></div>
+						</div>
+						<div class="fb-cont">
+							<div class="produceDescribe" style="text-align: center;padding: 10px;">
+								{{produceInfo.pi_reservation_notes}}
+							</div>
+							
+							<!-- <div class="product-list2">
+								<div class="textbox">
+									<p><img title="5555_看图王.jpg" style="float:none;" src="static/picture/1524027815866.jpg" border="0" vspace="0"
+										 hspace="0" /></p>
+									<p><br /></p>
+									<p>免预约，凭短信验证码直接到景区营销中心验证换票入园</p>
+									<p><br /></p>
+								</div>
+							</div> -->
+						</div>
+					</div>
+				</div>
+
+
+				<!--按钮固定层-->
+				<div class="btn-div" style="height: 0px;">
+					<div class="btn-main">
+						<div class="btn-cont">
+							<div class="btn-item btn-home"><a href="index.html"><span class="icon-home iconfont"></span>首页</a></div>
+							<div class="btn-item btn-my"><a href="user.html"><span class="icon-my iconfont"></span>我的</a></div>
+							<!-- <div class="btn-item btn-my">
+								<a href="user.html">
+									<img style="height:25px;width:25px;" src="static/images/car.png">
+									<div id="" style="text-align: center;">
+										添加
+									</div>
+								</a>
+							</div> -->
+							<a class="btn-item btn-service" :href="'tel:'+telephone"><span class="icon-service iconfont"></span>客服</a>
+
+							<a class="btn-button btn-buy" v-on:click='reserve'>立即预订</a>
+
+						</div>
+					</div>
+				</div>
+				<!--按钮固定层结束-->
+				<div class="st-item" id="part3">
+
+					<div class="fb-item">
+						<div class="fb-top">
+							<span class="left"><b class="iconfont icon-miaoshu"></b>产品描述</span><span class="right"><b class="iconfont icon-arrow"></b></span>
+							<div class="clear"></div>
+						</div>
+						<div class="fb-cont">
+							<div class="product-list2">
+								<div class="textbox" id="produce_describe"  style="min-height: 90vh">
+									
+								</div>
+							</div>
+						</div>
+					</div>
+					
+			
+					
+
+				</div>
+
+				<!-- <div class="st-item" id="part4">
+					<div class="fb-item">
+						<div class="fb-top">
+							<span class="left">类似产品</span><span class="right"><b class="iconfont icon-arrow"></b></span>
+							<div class="clear"></div>
+						</div>
+						<div class="fb-cont">
+							<div class="related-product" id="productList">
+								<div class="related-product-box">
+									<ul class="pb-list">
+
+										<li class="pb-list-item"><a class="area" href="/m2c/2/ticket.jsp?info_id=22151295&tree_id=0&order_cust_id=522336&user_id=xs19920721">
+												<div class="img"><img src="static/picture/1524026485922.jpg!s160x160"></div>
+												<div class="title">清泉湾空中玻璃漂+极速漂流 成人票（即买即用 免预约）
+												</div>
+												<div class="price">￥<strong>148
+													</strong>起
+												</div>
+												<div class="btn"><span class="btn-item bg-yellow">抢购</span></div>
+											</a></li>
+
+										<li class="pb-list-item"><a class="area" href="/m2c/2/ticket.jsp?info_id=22151301&tree_id=0&order_cust_id=522336&user_id=xs19920721">
+												<div class="img"><img src="static/picture/1524026599121.jpg!s160x160"></div>
+												<div class="title">清泉湾动感水城 成人票（即买即用 免预约）
+												</div>
+												<div class="price">￥<strong>90
+													</strong>起
+												</div>
+												<div class="btn"><span class="btn-item bg-yellow">抢购</span></div>
+											</a></li>
+
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<br /><br />
+				</div> -->
+
+
+			</div>
+			<!--折叠列表END-->
+			<div class="btn-div"></div>
+			<input type="hidden" id="sdate" value="" />
+
+			<div class="mask-div"></div>
+			<div class="popup-box" id="link_info" style="display: none;">
+				<div class="popup-box-mask"></div>
+				<div class="popup-box-cont">
+					<div class="popupbox-service bg-blue">
+						<div class="popupbox-top">联系客服<i class="iconfont icon-message"></i></div>
+						<div class="popupbox-box1">
+							<div class="tips">长按二维码并关注 ，可直接联系客服</div>
+							<div class="qr-code"><img src="static/picture/f88d9227b50c4b6a8c77aac8947964f9.gif"></div>
+						</div>
+						<div class="popupbox-box2">
+							<a class="btn-call bg-blue" href="tel:13680013414">或拨打：13680013414</a>
+						</div>
+					</div>
+					<a class="btn-close iconfont icon-close"></a>
+				</div>
+			</div>
+		</div>
+		
+
+
+		<script type="text/javascript" language=javascript src="static/js/jquery.lazyload.min.js"></script>
+				<script language="javascript">
+					function test2(){
+						function drawimage(ImgD) { //参数(图片,允许的宽度,允许的高度)
+							var image = new Image();
+							image.src = ImgD.src;
+							var iwidth = document.body.clientWidth - 20;
+							var iheight = iwidth;
+							if (image.width > 0 && image.height > 0) {
+								if (image.width > iwidth) {
+									ImgD.width = iwidth;
+									ImgD.height = (image.height * iwidth) / image.width;
+								}
+							}
+						}
+						$(function () {
+							$('img.lazy').lazyload();
+							$("img.lazy").bind("load", function () {
+								drawimage(this);
+							});
+						});
+					}
+					
+				</script>
+
+		<script src="static/js/fingerprint.js"></script>
+		<script language="javascript">
+			function test1(){
+				function getCal(year, month) {
+					var plan_id = '';
+					if ($('#plan_id').length > 0)
+						plan_id = $('#plan_id').val();
+					var units = '';
+					if ($('#unit').length > 0)
+						units = $('#unit').val();
+					$.ajax({
+						url: '/m2c/2/order_ajax.jsp?action=getcal&tree_id=0&info_id=9458916&year=' + year + '&month=' + month +
+							'&plan_id=' + plan_id + '&unit=' + units,
+						type: "POST",
+						beforeSend: function() {},
+						success: function(data) {
+							$('#pricecal').html(data);
+							calendarProd();
+						},
+						complete: function() {}
+					});
+					//$('#pricecal').load('/m2c/2/order_ajax.jsp?action=getcal&tree_id==ds.getString("tree_id")%>&info_id=info_id%>&year='+year+'&month='+month, function(){
+					//	calendarProd();
+					//});
+				}
+				
+				function showLinkInfo() {
+					$('#link_info').show();
+				}
+				
+				function goMember() {
+					var url = "/m2c/member/member.jsp";
+				
+					var fp1 = new Fingerprint();
+					var uid = fp1.get({
+						canvas: true,
+						screen_resolution: true
+					});
+				
+					if (uid && uid != '') {
+						url = url + '?uid=1313c25b061c7b7fc7238108232c91ea_' + uid;
+					}
+				
+					location.href = url;
+				}
+				
+				function ordernext() {
+					var sdate = $('#sdate').val();
+					if (sdate == '') {
+						window.location.hash = "#price_date";
+						alert('请先选择出发日期，然后进行预订。');
+						return false;
+					}
+					var url = '';
+				
+					var fp1 = new Fingerprint();
+					var uid = fp1.get({
+						canvas: true,
+						screen_resolution: true
+					});
+				
+					if (uid && uid != '') {
+						url = url + '&uid=1313c25b061c7b7fc7238108232c91ea_' + uid;
+					}
+				
+					location.href = 'pay_order.html';
+				}
+				$(function() {
+				
+					getCal('2019', '6');
+				
+					var w = $(".img-box").width();
+					$(".swipe-wrap .img-box").css("height", w / 2);
+					$(".swipe-wrap .photo").css("height", w / 2);
+					$(".swipe-wrap .photo").each(function() {
+						var h = $(this).find("img").height();
+						if (h < w / 2) {
+							$(this).find("img").css("height", "100%");
+						}
+					});
+					$(".btn-close").click(function() {
+						$('#link_info').hide();
+					});
+				
+					//页签切换
+					var subNav_top = $(".stick-tabbox").position().top;
+					var subNav_active = $(".st-ctrl .sel");
+					var subNav_scroll = function(target) {
+						target.parent().addClass("sel").siblings().removeClass("sel");
+						subNav_active = target.parent();
+					};
+					$(".stick-tabbox a").click(function() {
+						$(this).parent("li").addClass("sel").siblings().removeClass("sel");
+						var target = $(this).attr("href");
+						var targetScroll = $(target).offset().top;
+						$("html,body").animate({
+							scrollTop: targetScroll - 53
+						}, 0);
+						return false;
+					});
+					//页面跳转时定位
+					$(window).scroll(function() {
+						var targetTop = $(this).scrollTop();
+						if (targetTop >= subNav_top) {
+							$(".stick-tabbox").addClass("fixed");
+						} else {
+							$(".stick-tabbox").removeClass("fixed");
+						}
+						if (targetTop < $("#part1").position().top) {
+							subNav_scroll($(".part1"));
+						} else if (targetTop < $("#part2").position().top && targetTop < $("#part2").position().top + $("#part2").height()) {
+							subNav_scroll($(".part2"));
+						} else if ($("#part3").length > 0 && targetTop > $("#part3").position().top && targetTop < $("#part3").position()
+							.top + $("#part3").height()) {
+							subNav_scroll($(".part3"));
+						}
+						//  else if ($("#part4").length > 0 && targetTop > $("#part4").position().top) {
+						// 	subNav_scroll($(".part4"));
+						// }
+					});
+				
+				});
+				
+				function timer(intDiff) {
+					window.setInterval(function() {
+						var day = 0,
+							hour = 0,
+							minute = 0,
+							second = 0; //时间默认值
+						if (intDiff > 0) {
+							day = Math.floor(intDiff / (60 * 60 * 24));
+							hour = Math.floor(intDiff / (60 * 60)) - (day * 24);
+							minute = Math.floor(intDiff / 60) - (day * 24 * 60) - (hour * 60);
+							second = Math.floor(intDiff) - (day * 24 * 60 * 60) - (hour * 60 * 60) - (minute * 60);
+						}
+						if (minute <= 9) minute = '0' + minute;
+						if (second <= 9) second = '0' + second;
+						$('#day_show').html(day);
+						$('#hour_show').html('<s id="h"></s>' + hour);
+						$('#minute_show').html('<s></s>' + minute);
+						$('#second_show').html('<s></s>' + second);
+						intDiff--;
+					}, 1000);
+				}
+				
+				
+			}
+			
+		</script>
+		<script type="text/javascript">
+			var agent = '';
+			if(document.domain == 'www.test.com'){
+				var agent = '/api';  // 用于跨域代理名称转化
+				console.log('测试环境')
+			}else{
+				console.log('线上环境')
+			}
+			new Vue({
+				el: '#vue',
+				data: {
+					produceInfo: {},
+					produceMeal: [],
+					dateProduce: [],
+					mealIndex: 0,
+					year: '',
+					month: '',
+					day: '',
+					reverveDate: '',
+					stock: 0,	// 选中日期的库存
+					banner_index: 0,
+					telephone: 0,
+					alert: false,
+					alertContent: '提示'
+				},
+				methods: {
+					next_month: function(index){
+						let that = this;
+						if(index==0){
+							if(that.month == 1){
+								that.month = 12;
+								that.year--;
+							}else{
+								that.month--;
+							}
+						}else if(index==1){
+							if(that.month < 12){
+								that.month++;
+							}else{
+								that.year++;
+								that.month = 1;
+							}
+						}
+						that.createCal(that.year+'-'+that.month+'-'+that.day)
+					},
+					
+					createCal: function(datestr){
+						let that = this;
+						var time = new Date(datestr.replace(/-/g,'/'));			// ios需要 "2019/8/15 12:12" 这种格式,中间不能使用 '-', 需要 '/'
+						var year = time.getFullYear();	// 年份	
+						var month = time.getMonth()+1;	// 月份
+						var day = time.getDate();	// 几号
+						that.year = year;
+						that.month = month;
+						that.day = day;
+						var days = new Date(year, month, 0).getDate();	// 当月天数
+						var week = new Date(year+'-'+month+'-01').getDay();	// 当月第一天星期几
+						var isArray = [];
+						
+						for(var i = 0;i<that.dateProduce.length;i++){
+							var timeArray = that.dateProduce[i].product_date2.split('-')
+							if(timeArray[0] == year && timeArray[1] == month){ 	//  && that.dateProduce[i].product_stock > 0
+								isArray.push(timeArray[2]);
+							}
+						}
+						
+						var str = '';
+						for(var i = 0 ; i < week; i++){
+							str+= '<li date=""><a><span></span></a></li>';
+						}
+						
+						for(var i =0;i<days;i++){
+							var existIndex;
+							var isExist = isArray.some(function(value,index){
+								existIndex = index;
+								return value == i+1;
+							});
+							if(isExist){
+								str += '<li cust_id="" stock="'+that.dateProduce[existIndex].product_stock+'" date="'+that.dateProduce[existIndex].product_date+'"><a><span d="1">'+(i+1)+'</span><b class="price">￥'+that.dateProduce[existIndex].product_price+'</b></a><div class="stock">&gt;'+that.dateProduce[existIndex].product_stock+'张</div></li>';
+							}else{
+								str += '<li cust_id="" date="'+year+'-'+(month<10?'0'+month:month)+'-'+((i+1)<10?'0'+(i+1):(i+1))+'"><a><span d="1">'+(i+1)+'</span></a></li>';
+							}
+						}
+						$('#cal_new').html(str);
+						
+						// 创建完日历后重新绑定事件
+						$('.c-day ul li').click(function() {
+							if ($(this).children('div').length > 0) {
+								var stock = $(this).attr('stock');
+								if(stock < 1){
+									alert('所选日期门票已售空')
+									return false;
+								}
+								var reverveDate = $(this).attr('date');
+								$('.c-day ul li').removeClass('on');
+								$(this).addClass('on');
+								that.reverveDate = reverveDate;
+								that.stock = stock;
+							}
+						})
+					},
+					
+					// 获取价格日历
+					getCalPrice: function(id,set_meal_id){
+						let that = this;
+						$.post(agent+"/lsmsManager/productPriceStock/queryProductPriceByProductId",
+							{
+								pi_id: id, 
+								set_meal_id: set_meal_id,
+							},
+							function(data,status){
+							    that.dateProduce = data.map(function(value, index){
+									value.product_date2 = value.product_date.split(' ')[0];
+									return value;
+								});
+								var time = new Date();
+								var year = time.getFullYear();	// 年份
+								var month = time.getMonth()+1;	// 月份
+								var day = time.getDate();	// 几号
+								that.createCal(year+'-'+month+'-'+day);
+								
+							  
+						});
+					},
+					
+					// 套餐选择
+					mealSelect: function(index){
+						this.mealIndex = index;
+						this.getCalPrice(this.produceInfo.pi_id, this.produceMeal[index].set_meal_id)
+					},
+					// 立即预定
+					reserve: function(){
+						
+						var currentTimestamp = new Date().getTime();
+						var expire = localStorage.getItem('expire');
+						if(localStorage.getItem('weChatOpenId') == null) {
+							window.location.href = 'index.html';
+							return false;
+						}else{
+							if(!expire == null){
+								if(expire < currentTimestamp){
+									localStorage.removeItem('weChatCity');
+									localStorage.removeItem('weChatCountry');
+									localStorage.removeItem('weChatHeadImg');
+									localStorage.removeItem('weChatName');
+									localStorage.removeItem('weChatOpenId');
+									localStorage.removeItem('weChatProvince');
+									localStorage.removeItem('weChatSex');
+									window.location.href = 'index.html';
+									return false;
+								}
+							}
+						}
+						
+						// if(!$.cookie('weChatOpenId')){
+						// 	window.location.href = 'index.html';
+						// 	return false;
+						// }
+						var pid = this.produceInfo.pi_id;
+						var name = this.produceInfo.pi_name;
+						var mid = this.produceMeal[this.mealIndex].set_meal_id;
+						var date = this.reverveDate;
+						var price = this.produceMeal[this.mealIndex].set_meal_price;
+						var adult_number = this.produceMeal[this.mealIndex].set_meal_adult_number;
+						var child_number = this.produceMeal[this.mealIndex].set_meal_children_number;
+						var stock = this.stock;
+						if(!pid){
+							// alert('没有可选产品')
+							this.alert = true;
+							this.alertContent = '没有可选产品';
+							return false;
+						}
+						if(!mid){
+							// alert('没有可选套餐')
+							this.alert = true;
+							this.alertContent = '没有可选套餐';
+							return false;
+						}
+						if(date == ''){
+							// alert('请选择预定日期')
+							this.alert = true;
+							this.alertContent = '请选择预定日期';
+							return false;
+						}
+						if(stock < 1){
+							// alert('库存不足')
+							this.alert = true;
+							this.alertContent = '库存不足';
+							return false;
+						}
+						var url = 'pay_order.html?pid='+pid+'&mid='+mid+'&date='+date+'&name='+name+'&price='+price+'&adult_number='+adult_number+'&child_number='+child_number+'&stock='+stock;
+						// var url = 'user_info.html?pid='+pid+'&mid='+mid+'&date='+date+'&name='+name+'&price='+price+'&adult_number='+adult_number+'&child_number='+child_number;
+						location.href= url;
+					}
+					
+				},
+				mounted: function(){
+					
+					test2();
+					test1();
+					let that = this;
+					var id = location.href.split('=')[1];
+					
+					// 获取产品详情
+					$.post(agent+"/lsmsManager/product/queryProductInfoByPiId",
+						{
+							pi_id: id, 
+						},
+						function(data,status){
+							data.map(function(value, index){
+								var pArray = value.pi_picture.split(';')
+								pArray = pArray.slice(0, pArray.length - 1)
+								var newArray = pArray.map(function(value, index){
+									value =  agent+'/imgaes/'+value
+									return value;
+								})
+								value.pi_picture = newArray;
+								// value.pi_picture = agent+'/imgaes/'+svalue.pi_picture.substring(0,value.pi_picture.length - 1);
+								that.produceInfo = value;
+								$('.produceDescribe').html(value.pi_reservation_notes)
+								$('#produce_describe').html(value.pi_describe)
+							});
+						  
+					});
+					
+					// 获取产品套餐
+					$.post(agent+"/lsmsManager/setMeal/queryProductSetMealByPiId",
+						{
+							product_id: id, 
+						},
+						function(data,status){
+							that.produceMeal = data;
+							that.getCalPrice(id, that.produceMeal[0].set_meal_id);
+					});
+					
+					
+					// 获取客服电话
+					$.post(agent+"/lsmsManager/weChat/queryProductCustomServiceIphone",
+						{
+							pi_id: id, 
+						},
+						function(data,status){
+							that.telephone = data;
+						  
+					});
+					
+					
+					
+					setTimeout(function() {
+						$.getScript("static/js/siema.min.js", function() { //加载test.js,成功后，并执行回调函数  
+							var mySiema = new Siema({ //下面要用到Siema，就要声明为全局变量
+								loop: true,
+							});
+							setInterval(function() {
+								mySiema.next();
+								that.banner_index = mySiema.currentSlide;
+							}, 3000);
+					
+							setInterval(function() {
+								that.banner_index = mySiema.currentSlide;
+							}, 100);
+					
+					
+							$('.banner-spot span').click(function(e) {
+								var index = $(".banner-spot span").index($(this))
+								mySiema.goTo(index);
+								that.banner_index = index;
+							})
+						});
+					
+					}, 200)
+					
+
+				}
+			})
+		</script>	
+		 <script type="text/javascript">
+
+
+     //微信浏览器中，confirm弹框不显示域名
+    (function(){
+        //先判断是否为微信浏览器
+        var ua = window.navigator.userAgent.toLowerCase();
+        if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+            //重写confirm方法，confirm()方法重写，不能传多余参数
+            window.confirm = function (message) {
+               var iframe = document.createElement("IFRAME");
+               iframe.style.display = "none";
+               iframe.setAttribute("src", 'data:text/plain,');
+               document.documentElement.appendChild(iframe);
+               var alertFrame = window.frames[0];
+               var result = alertFrame.window.confirm(message);
+               iframe.parentNode.removeChild(iframe);
+               return result;
+            };
+        }
+    })();
+    </script>
+
+	</body>
+
+
+</html>

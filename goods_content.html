@@ -1,0 +1,308 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="format-detection" content="telephone=on">
+		<link href="static/css/m-reset_1.css" rel="stylesheet">
+		<link href="static/css/global1803.css" rel="stylesheet">
+
+		<link href="static/css/topic-style.css" rel="stylesheet">
+		<script src="static/js/jquery.min.js"></script>
+		<script src="static/js/currency_utils.js"></script>
+		<script src="static/js/global20170703.js"></script>
+
+
+
+		<title>清泉湾生态旅游度假区推荐</title>
+	</head>
+
+	<body class="bg w">
+
+		<!--产品图片-->
+		<div class="product-photo">
+			<div class="main">
+				<div class="img-box">
+					<div class="swipe" id="slider">
+						<div class="swipe-wrap">
+							<figure>
+								<div class="sw-item"><a class="photo"><img src="static/picture/1527486299194.jpg"></a></div>
+							</figure>
+						</div>
+					</div>
+					<div class="mask"></div>
+					<div class="p-ti">
+						<div class="title">清泉湾生态旅游度假区
+							<span class="star">
+
+							</span>
+						</div>
+					</div>
+					<div class="btn-box">
+						<div class="bb-left"><a class="btn-item" href="javascript:;" onClick="javascript:history.back(-1);"><b class="iconfont icon-back1"></b></a></div>
+						<div class="bb-right"><a class="btn-item" href="/m2c/2/nav0.jsp?order_cust_id=522336&user_id=xs19920721"><b class="iconfont icon-search"></b></a></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="static/js/swipe.js"></script>
+		<script>
+			var w = $(".img-box").width();
+			$(".swipe-wrap .img-box").css("height", w / 2);
+			$(".swipe-wrap .photo").css("height", w / 2);
+			$(".swipe-wrap .photo").each(function() {
+				var h = $(this).find("img").height();
+				if (h < w / 2) {
+					$(this).find("img").css("height", "100%");
+				}
+			});
+
+			var slider = Swipe(document.getElementById('slider'), {
+				auto: 3000,
+				continuous: true,
+				callback: function(pos) {
+					var i = bullets.length;
+					while (i--) {
+						bullets[i].className = ' ';
+					}
+					bullets[pos].className = 'on';
+				}
+			});
+		</script>
+		<!--产品图片END-->
+
+		<!--产品信息-->
+		<div class="product-info">
+			<div class="main">
+				<ul>
+					<li class="addr"><b class="f-icons icons">L</b>清远市清新县骆坑
+
+						<a class="btn-map" href="/m2c/map.jsp?view_id=qyqsw">[查看地图]</a>
+
+					</li>
+
+					<li class="phone"><a href="tel:0763-3162668"><b class="f-icons">T</b>0763-3162668</a></li>
+
+					<!--<li class="facilities" style="display:none;">
+				<div class="ti">设施/服务</div>
+				<p class="item"><b class="f-icons" title="park">0</b>停车场</p>
+				<p class="item"><b class="f-icons" title="wifi">1</b>WiFi</p>
+				<p class="item"><b class="f-icons" title="breakfast">2</b></span>餐饮服务</p>
+			</li>-->
+				</ul>
+			</div>
+		</div>
+		<!--产品信息END-->
+
+
+		<!--折叠列表-->
+		<div class="fold-block main">
+
+			<div class="fb-item">
+				<div class="fb-top">
+					<span class="left">门票(3)</span><span class="right"><b class="f-icons arrow">c</b></span>
+					<div class="clear"></div>
+				</div>
+				<div class="fb-cont">
+					<div class="product-list2">
+						<ul>
+
+							<li>
+								<div class="left"><a href="ticket.jsp?sdate=&edate=&info_id=22151295&order_cust_id=522336&user_id=xs19920721">
+										<p class="ti">清泉湾空中玻璃漂+极速漂流 成人票（即买即用 免预约）</p><span class="cGray">[当天可以预订]</span>
+									</a></div>
+								<div class="right"><a href="goods.html">
+										<p class="price">￥<b>148</b>起</p>
+										<p class="btn">立即预订</p>
+									</a></div>
+							</li>
+
+							<li>
+								<div class="left"><a href="goods.html">
+										<p class="ti">清泉湾空中玻璃漂+极速漂流+动感水城 成人票（即买即用 免预约）</p><span class="cGray">[当天可以预订]</span>
+									</a></div>
+								<div class="right"><a href="goods.html">
+										<p class="price">￥<b>198</b>起</p>
+										<p class="btn">立即预订</p>
+									</a></div>
+							</li>
+
+							<li>
+								<div class="left"><a href="goods.html">
+										<p class="ti">清泉湾动感水城 成人票（即买即用 免预约）</p><span class="cGray">[当天可以预订]</span>
+									</a></div>
+								<div class="right"><a href="goods.html">
+										<p class="price">￥<b>90</b>起</p>
+										<p class="btn">立即预订</p>
+									</a></div>
+							</li>
+
+						</ul>
+					</div>
+				</div>
+			</div>
+
+
+
+		</div>
+		<div class="float-date"></div>
+		<!--折叠列表END-->
+
+		<div class="btn-div">
+			<div class="btn-main">
+				<div class="btn-cont">
+					<div class="btn-item btn-home"><a href="index.html"><span class="icon-home iconfont"></span>首页</a></div>
+					<div class="btn-item btn-my"><a href="user.html"><span class="icon-my iconfont"></span>我的</a></div>
+
+					<a class="btn-item btn-service" href="javascript:showLinkInfo();"><span class="icon-service iconfont"></span>客服</a>
+
+					<a class="btn-button btn-gray" href="goods.html">选择产品进行预订</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="mask-div"></div>
+		<div class="popup-box" id="link_info" style="display: none;">
+			<div class="popup-box-mask"></div>
+			<div class="popup-box-cont">
+				<div class="popupbox-service bg-blue">
+					<div class="popupbox-top">联系客服<i class="iconfont icon-message"></i></div>
+					<div class="popupbox-box1">
+						<div class="tips">长按二维码并关注 ，可直接联系客服</div>
+						<div class="qr-code"><img src="static/picture/f88d9227b50c4b6a8c77aac8947964f9.gif"></div>
+					</div>
+					<div class="popupbox-box2">
+						<a class="btn-call bg-blue" href="tel:13680013414">或拨打：13680013414</a>
+					</div>
+				</div>
+				<a class="btn-close iconfont icon-close"></a>
+			</div>
+		</div>
+
+		<script src="static/js/fingerprint.js"></script>
+		<script>
+			$(function() {
+				$(".btn-close").click(function() {
+					$('#link_info').hide();
+				});
+				$('.bnone').click(function() {
+					getCal($('#sdate').val());
+					$('.float-date').removeClass('out');
+					$('.float-date').show();
+					setTimeout("$('.float-date').addClass('in')", 100);
+				})
+				$('.float-date .comfir').click(function() {
+					floatDateOut();
+				})
+				$('.float-date .cancel').click(function() {
+					floatDateOut();
+				})
+				$('.float-date .float-date-mask').click(function() {
+					floatDateOut();
+				})
+				getRoomList();
+			});
+
+			function floatDateOut() {
+				$('.float-date').removeClass('in').addClass('out');
+				$('.float-date').hide();
+				//setTimeout("$('.float-date').hide()",150);
+			}
+
+			function getCal(sdate) {
+				$('.float-date').load("cal5_ajax.jsp?sdate=" + sdate, function() {
+					calHotel();
+				});
+			}
+
+			function calHotelGo() {
+				$('#start_date').html($('#sdate').val());
+				$('#end_date').html($('#edate').val());
+				$('#nights').html(DateDiff($('#sdate').val(), $('#edate').val()));
+				floatDateOut();
+				getRoomList();
+			}
+
+			function getRoomList() {
+				$('#roomlist').load("hotel.jsp?action=getRoom&view_id=qyqsw&sdate=" + $('#sdate').val() + "&edate=" + $('#edate').val(),
+					function() {
+
+					});
+			}
+			var flag = 1;
+
+			function calHotel() {
+				var ojb = $(".cal-public .c-day li");
+				ojb.click(function() {
+					if ($(this).attr('date') == '') {
+						return false;
+					}
+					if (flag == 1) {
+						if ($(this).hasClass("no")) {
+							$(".calendar-box .tips .txt").text("入住日期选择错误");
+							$(".calendar-box .tips").delay("fast").fadeIn("fast");
+							$(".calendar-box .tips").delay("800").fadeOut("fast");
+						} else {
+							$(this).addClass("on").siblings().removeClass("on");
+							if ($(this).parents("div").hasClass("double")) {
+								$(".calendar-box .tips .txt").text("请选择离店日期");
+								$(".calendar-box .tips").delay("fast").fadeIn("fast");
+								$(".calendar-box .tips").delay("1200").fadeOut("fast");
+								flag = 2;
+								calendarSelected(ojb.index(this), ojb);
+								$('#sdate').val($(this).attr('date'));
+							}
+						}
+					} else if (flag == 2) {
+						if ($(this).hasClass("on")) {
+							$(".calendar-box .tips .txt").text("不能选择同一天");
+							$(".calendar-box .tips").delay("fast").fadeIn("fast");
+							$(".calendar-box .tips").delay("800").fadeOut("fast");
+						} else if ($(this).hasClass("no")) {
+							$(".calendar-box .tips .txt").text("离店日期选择错误");
+							$(".calendar-box .tips").delay("fast").fadeIn("fast");
+							$(".calendar-box .tips").delay("800").fadeOut("fast");
+						} else {
+							$(this).addClass("leave").siblings().removeClass("leave");
+							$('#edate').val($(this).attr('date'));
+							flag = 1;
+							calHotelGo();
+						}
+					}
+				});
+			}
+
+			function DateDiff(sDate1, sDate2) {
+				var aDate = sDate1.split("-");
+				var oDate1 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]);
+				aDate = sDate2.split("-");
+				var oDate2 = new Date(aDate[1] + '-' + aDate[2] + '-' + aDate[0]);
+				var iDays = parseInt(Math.abs(oDate1 - oDate2) / 1000 / 60 / 60 / 24);
+				return iDays;
+			}
+
+			function goMember() {
+				var url = "/m2c/order_manager.jsp";
+
+				var fp1 = new Fingerprint();
+				var uid = fp1.get({
+					canvas: true,
+					screen_resolution: true
+				});
+
+				if (uid && uid != '') {
+					url = url + '&uid=b1c9c61da38999af2ccc097e2139137c_' + uid;
+				}
+
+				location.href = url;
+			}
+
+			function showLinkInfo() {
+				$('#link_info').show();
+			}
+		</script>
+
+	</body>
+</html>
